@@ -1,0 +1,39 @@
+# Виртуальное окружение
+.venv/
+venv/
+env/
+ENV/
+
+# IDE (PyCharm, VSCode)
+.idea/
+*.iml
+.vscode/
+*.swp
+*.swo
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.python
+
+# Переменные окружения
+.env
+.env.local
+.env.*.local
+
+# OS
+Thumbs.db
+.DS_Store
+Desktop.ini
+
+# Логи
+*.log
+logs/
+
+# Временные файлы
+*.tmp
+*.bak
+*.swp
+*.swo
