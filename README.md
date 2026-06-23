@@ -10,5 +10,5 @@
 ### Установка
 
 ```bash
-git clone https://github.com/ваш-username/guess-number-game.git
+git clone https://github.com/cynicznykot/the-password-generator.git
 cd guess-number-game
