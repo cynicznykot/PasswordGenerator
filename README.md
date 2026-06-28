@@ -1,14 +1,25 @@
-# 🔑 Генератор Паролей
+# 🔑 Персональный Генератор Паролей
 
-[![Python Version](https://img.shields.io/badge/python-3.11+-blue.svg)](https://python.org)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+Гибкий генератор паролей с настраиваемыми параметрами символов.
 
-Простой в использовании и гибкий генератор для создания сложных паролей для всех ваших нужд.
+## 📋 Возможности
 
-## 🚀 Быстрый старт
+- Генерация паролей любой длины (от 5 до 35 символов)
+- Выбор типов символов: буквы, цифры, специальные символы
+- Простой и интуитивно понятный интерфейс
+- Валидация ввода пользователя
+- Легкость в использовании
 
-### Установка
+## 🚀 Установка
 
 ```bash
-git clone https://github.com/cynicznykot/the-password-generator.git
-cd guess-number-game
+# Клонируйте репозиторий
+git clone https://github.com/yourusername/password-generator.git
+cd password-generator
+
+# Создайте виртуальное окружение
+python -m venv .venv
+source .venv/bin/activate  # На Windows: .venv\Scripts\activate
+
+# Установите зависимости
+pip install -r requirements.txt
