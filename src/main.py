@@ -1,8 +1,7 @@
-import random
+from secrets import choice
 import string
 import time
 import sys
-import secrets
 
 
 # --- 1. AUXILIARY FUNCTIONS ---
@@ -23,13 +22,13 @@ def get_number(prompt):
     while True:
         try:
             user_length = int(input(prompt))
-            if user_length < 8:
+            if user_length < 16:
                 print("⚠️ Warning! The your password is too short!")
-                print("🛡️ The password must be at least 8 characters long!")
+                print("🛡️ The password must be at least 16 characters long!")
                 continue
-            if user_length > 35:
+            if user_length > 64:
                 print("⚠️ Warning! The password is too long!")
-                print("🛡️ The password must be at least 35 characters long!")
+                print("🛡️ The password must be at least 64 characters long!")
                 continue
             return user_length
         except ValueError:
@@ -64,7 +63,7 @@ def generate_password(length, character_pool):
     if not character_pool:
         print("❌ Error! No characters selected!")
         return None
-    return "".join(random.choice(character_pool) for _ in range(length))
+    return "".join(choice(character_pool) for _ in range(length))
 
 
 def generate_again():
