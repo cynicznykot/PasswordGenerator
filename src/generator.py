@@ -66,6 +66,34 @@ def generate_password(length, character_pool):
     return "".join(choice(character_pool) for _ in range(length))
 
 
+def check_strength(password):
+    score = 0
+
+    # Check length
+    if 16 <= len(password) <= 29:
+        score += 1
+    if len(password) >= 30:
+        score += 2
+
+    # Check symbols
+    if any(c.islower() for c in password):
+        score += 1
+    if any(c.isupper() for c in password):
+        score += 1
+    if any(c.isdigit() for c in password):
+        score += 1
+    if any(c in "!@#$%^&*()" for c in password):
+        score += 1
+
+    # Return result
+    if score <= 2:
+        return f"Not Safe"
+    elif score <= 4:
+        return f"Moderate"
+    else:
+        return f"Very Strong"
+
+
 def generate_again():
     # Repeat func
     user_answer = input("Do you want to generate another password? (y/n): ").lower()
@@ -105,6 +133,8 @@ def main():
         print(f"✅ Your generated password: {user_password}")
         print("=" * 50)
 
+        print(check_strength(user_password))
+
         if not generate_again():
             print("\n" + "=" * 55)
             print("👋 Thank you for using my Password Generator! Goodbye!")
@@ -116,3 +146,8 @@ def main():
             for _ in range(3):
                 time.sleep(1)
                 print(".", end="", flush=True)
+
+
+# Just check test on generator.py
+# if __name__ == "__main__":
+#     main()

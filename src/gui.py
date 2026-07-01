@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 from tkinter import filedialog
-from generator import build_character_pool, generate_password
+from generator import build_character_pool, generate_password, check_strength
 
 
 def main():
@@ -36,13 +36,22 @@ def main():
         # Final result
         password_var.set(password)
 
+        # Password strength indicator
+        strength = check_strength(password)
+        if strength == "Not Safe":
+            strength_label.config(text="🔴 Not Safe!", fg="red")
+        elif strength == "Moderate":
+            strength_label.config(text="🟡 Moderate", fg="orange")
+        else:
+            strength_label.config(text="🟢 Very Strong!", fg="green")
+
 
     def copy_password():
         password = password_var.get()
         if password:
             root.clipboard_clear()
             root.clipboard_append(password)
-            password_var.set("✅ Coppied!")
+            password_var.set("✅ Copied!")
             root.after(2000, lambda: password_var.set(password))
 
 
@@ -115,6 +124,16 @@ def main():
     entry.pack(pady=15)
     entry.pack(pady=15)
     entry.pack()
+
+    # Password strength indicator
+    strength_label = tk.Label(
+        root,
+        text="",
+        font=("Arial", 12, "bold"),
+        pady=5,
+    )
+
+    strength_label.pack()
 
     copy_button = tk.Button(
         root,
