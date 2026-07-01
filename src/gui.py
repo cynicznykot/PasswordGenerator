@@ -16,6 +16,7 @@ def main():
     use_symbols = tk.BooleanVar(value=True)
     password_var = tk.StringVar(value="")
 
+
     def on_generate():
         # Retrieving values
         length = length_var.get()
@@ -35,7 +36,17 @@ def main():
         password_var.set(password)
 
 
+    def copy_password():
+        password = password_var.get()
+        if password:
+            root.clipboard_clear()
+            root.clipboard_append(password)
+            password_var.set("✅ Coppied!")
+            root.after(2000, lambda: password_var.set(password))
+
+
     # ---- INTERFACE ELEMENTS ----
+
     # Length mark
     Label_length = tk.Label(root, text="Length Password:", font=("Arial", 15))
     Label_length.pack(pady=5)
@@ -63,6 +74,18 @@ def main():
     entry.pack(pady=15)
     entry.pack(pady=15)
     entry.pack()
+
+    copy_button = tk.Button(
+        root,
+        text="📋 Copy to clipboard",
+        command=copy_password,
+        font=("Arial", 12),
+        bg="#2196F3",
+        fg="white",
+        padx=15,
+        pady=5,
+    )
+    copy_button.pack(pady=5)
 
     # Launch window
     root.mainloop()
