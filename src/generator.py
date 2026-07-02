@@ -1,24 +1,47 @@
+"""
+The password generator app.
+
+A small application that allows you to generate a password of any complexity using a user-friendly
+graphical interface with accessible settings and save it in a convenient 'txt' file so you don't forget
+your social media passwords.
+"""
+
+
 from secrets import choice
 import string
 import time
 import sys
 
 
-# --- 1. AUXILIARY FUNCTIONS ---
+# ===============================================================================================
+# 1. AUXILIARY FUNCTIONS
+# ===============================================================================================
 
 
 def greed():
-    # Welcome func
+    """
+    Display welcome message.
+
+    Shows a formatted welcome screen with emojis and explains the goal
+    of the game. Includes short pauses for better user experience.
+    """
     print("\n" + "=" * 50)
     print("🔑 Welcome to the 'Personal Password Generator'!")
     print("=" * 50)
 
-    time.sleep(0.3)
-    print("🛡️ You can create a password of any length and flexibly customize it to suit your needs!")
+    time.sleep(0.5)
+    print("🛡️ You can create a password of the developer's specified "
+          "length (from 16 to 64) and flexibly customize it to suit "
+          "your needs!")
 
 
 def get_number(prompt):
-    # User input validation func
+    """
+       Get a valid integer from the user.
+
+       Continuously prompts the user until a valid integer is entered.
+       Handles ValueError exceptions and displays an error message.
+       """
     while True:
         try:
             user_length = int(input(prompt))
@@ -35,11 +58,18 @@ def get_number(prompt):
             print("❌ Error! Please enter a number!")
 
 
-# --- 2. APP LOGIC ---
+# ==============================================================================================
+# 2. APP LOGIC
+# ==============================================================================================
 
 
 def get_character_options():
-    # User-selectable password setting func
+    """
+    Get password complexity settings from the user
+    based on the presence of letters, numbers, and symbols.
+
+    Returns data for creating a password.
+    """
     user_letters = input("Include letters? (y/n): ").lower() == 'y'
     user_digits = input("Include digits? (y/n): ").lower() == 'y'
     user_symbols = input("Include symbols? (y/n): ").lower() == 'y'
@@ -47,7 +77,9 @@ def get_character_options():
 
 
 def build_character_pool(user_letters, user_digits, user_symbols):
-    # Function to add a password to a variable
+    """
+    Input data for the settings for the future password.
+    """
     characters = ""
     if user_letters:
         characters += string.ascii_letters
@@ -59,7 +91,12 @@ def build_character_pool(user_letters, user_digits, user_symbols):
 
 
 def generate_password(length, character_pool):
-    # Password generation func
+    """
+    Generate a password based on the entered data.
+
+    Generation will not occur if the user has not previously
+    selected password settings (no letters, numbers, or symbols).
+    """
     if not character_pool:
         print("❌ Error! No characters selected!")
         return None
@@ -67,6 +104,12 @@ def generate_password(length, character_pool):
 
 
 def check_strength(password):
+    """
+    Password strength check based on input data.
+    Total password length, including presence of letters,
+    numbers, and symbols.
+
+    """
     score = 0
 
     # Check length
@@ -75,7 +118,7 @@ def check_strength(password):
     if len(password) >= 30:
         score += 2
 
-    # Check symbols
+    # Check all symbols
     if any(c.islower() for c in password):
         score += 1
     if any(c.isupper() for c in password):
@@ -95,7 +138,9 @@ def check_strength(password):
 
 
 def generate_again():
-    # Repeat func
+    """
+    Asks the user if he wants to repeat the generation of a new password.
+    """
     user_answer = input("Do you want to generate another password? (y/n): ").lower()
     possitive = ['y', 'yes', 'yeah', 'da', 'd', 'a']
     negative = ['n', 'no', 'not', 'net', 'nope']
@@ -109,11 +154,18 @@ def generate_again():
         return generate_again()
 
 
-# --- 3. MAIN FUNC ---
+# ============================================================================================
+# 3. MAIN FUNC
+# ============================================================================================
 
 
 def main():
-    # Main func
+    """
+    The main controller of the application.
+
+    Greets the user and starts the application cycle. After each cycle,
+    asks the user if they want to restart the generation.
+    """
     while True:
         greed()
         user_length = get_number("Enter your password length: ")
@@ -148,6 +200,8 @@ def main():
                 print(".", end="", flush=True)
 
 
-# Just check test on generator.py
+# This code will be removed in the future.
+# It was added to test code within a file without connecting the interface.
+
 # if __name__ == "__main__":
 #     main()
