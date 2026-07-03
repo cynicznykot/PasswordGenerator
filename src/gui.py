@@ -16,6 +16,8 @@ def main():
     use_digits = tk.BooleanVar(value=True)
     use_symbols = tk.BooleanVar(value=True)
     password_var = tk.StringVar(value="")
+    service_var = tk.StringVar(value="")
+    login_var = tk.StringVar(value="")
 
 
     def on_generate():
@@ -58,13 +60,20 @@ def main():
     def save_password():
         password = password_var.get()
         service = entry_service.get().strip()
+        login = entry_email.get().strip()
 
         if not password:
-            password_var.set("⚠️ Generate a password first!")
+            password_var.set("⚠️ Generate a password!")
             return
 
         if not service:
-            password_var.set("⚠️ Enter a service name!")
+            service_var.set("⚠️ Empty a service name!")
+            return
+
+        if not login:
+            login_var.set("⚠️ Empty a login/email name!")
+            return
+
 
         # File selection dialog
         file_path = filedialog.asksaveasfilename(
@@ -80,10 +89,11 @@ def main():
 
         # Saving to the selected file
         with open(file_path, "a", encoding="utf-8") as file:
-            file.write(f"Service: {service} | Password: {password}\n")
+            file.write(f"Service: {service} | Login/email: {login} | Password: {password}\n")
 
         password_var.set(f"✅ Saved to: {file_path}")
-        entry_service.delete(0, tk.END)
+        service_var.set("")
+        login_var.set("")
         root.after(2000, lambda: password_var.set(password))
 
 
@@ -108,12 +118,18 @@ def main():
     check_symbols.pack(pady=5)
 
     # Your service name
-
     label_service = tk.Label(root, text="Your Service name:", font=("Arial", 15))
     label_service.pack(pady=5)
 
-    entry_service = tk.Entry(root, width=40, font=("Arial", 15))
+    entry_service = tk.Entry(root, textvariable=service_var, width=30,font=("Arial", 15), justify="center")
     entry_service.pack(pady=5)
+
+    # Your nickname/mail
+    label_mail = tk.Label(root, text="Your mail or login:", font=("Arial", 15))
+    label_mail.pack(pady=5)
+
+    entry_email = tk.Entry(root, textvariable=login_var, width=30, font=("Arial", 15), justify="center")
+    entry_email.pack(pady=5)
 
     # Button
     button = tk.Button(root, text="Generate Password", command=on_generate, font=("Arial", 17))
@@ -121,9 +137,7 @@ def main():
 
     # Password field
     entry = tk.Entry(root, textvariable=password_var, width=70, font=("Arial", 12), justify="center")
-    entry.pack(pady=15)
-    entry.pack(pady=15)
-    entry.pack()
+    entry.pack(pady=5)
 
     # Password strength indicator
     strength_label = tk.Label(
