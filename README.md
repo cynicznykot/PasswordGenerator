@@ -1,25 +1,25 @@
-# 🔑 Персональный Генератор Паролей
+# Password Generator
 
-Гибкий генератор паролей с настраиваемыми параметрами символов.
+A flexible password generator with customizable character parameters.
 
-## 📋 Возможности
+## Features
 
-- Генерация паролей любой длины (от 5 до 35 символов)
-- Выбор типов символов: буквы, цифры, специальные символы
-- Простой и интуитивно понятный интерфейс
-- Валидация ввода пользователя
-- Легкость в использовании
+- Generate passwords of any length (from 5 to 35 characters)
+- Choose character types: letters, digits, special characters
+- Simple and intuitive interface
+- User input validation
+- Easy to use
 
-## 🚀 Установка
+## Installation
 
 ```bash
-# Клонируйте репозиторий
-git clone https://github.com/yourusername/password-generator.git
-cd password-generator
+# Clone the repository
+git clone https://github.com/CynicznyKot/PasswordGenerator.git
+cd PasswordGenerator
 
-# Создайте виртуальное окружение
+# Create a virtual environment
 python -m venv .venv
-source .venv/bin/activate  # На Windows: .venv\Scripts\activate
+source .venv/bin/activate  # On Windows: .venv\Scripts\activate
 
-# Установите зависимости
+# Install dependencies
 pip install -r requirements.txt
