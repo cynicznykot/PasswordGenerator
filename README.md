@@ -86,6 +86,8 @@
 
 ![Пример интерфейса](images/screenshot_main.png)
 
+![Пример интерфейса](images/screenshot_save_password.png)
+
 ---
 
 ## Быстрый старт
