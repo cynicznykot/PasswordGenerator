@@ -84,23 +84,7 @@
 
 Ваш интерфейс будет выглядеть так:
 
-┌─────────────────────────────────────────────────────────┐
-│ 🔐 Your Personal Password Generator │
-│ ───────────────────────────────────────────────────── │
-│ Length Password: [=========●=========] 32 │
-│ ☑ Use Letters │
-│ ☑ Use Digits │
-│ ☑ Use Symbols │
-│ Your Service name: [Google ] │
-│ Your mail or login: [user@gmail.com] │
-│ [ 🎲 Generate Password ] │
-│ ┌─────────────────────────────────────────────────┐ │
-│ │ P@ssw0rd!2024Secure# │ │
-│ └─────────────────────────────────────────────────┘ │
-│ 🟢 Very Strong! │
-│ [ 📋 Copy to clipboard ] │
-│ [ 💾 Save the password to file ] │
-└─────────────────────────────────────────────────────────┘
+![Пример интерфейса](images/screenshot_main.png)
 
 ---
 
