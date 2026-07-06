@@ -124,5 +124,6 @@ class TestGuiFunctions(unittest.TestCase):
             self.fail(f"main() raised an exception: {e}")
 
 
+# unittest
 if __name__ == "__main__":
     unittest.main()
