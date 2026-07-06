@@ -166,7 +166,6 @@ class TestCheckStrength(unittest.TestCase):
         self.assertEqual(result, "Very Strong")
 
 
-# import pytest
 if __name__ == "__main__":
     import pytest
     pytest.main([__file__, "-v"])
