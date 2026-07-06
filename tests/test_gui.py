@@ -9,7 +9,7 @@ because GUI tests are slow and require a display environment.
 import unittest
 from unittest.mock import MagicMock, patch
 import tkinter as tk
-from src.gui import main
+from src.generator import build_character_pool, generate_password, check_strength
 
 
 @unittest.skip("GUI tests are slow, skipping for now")

@@ -1,15 +1,9 @@
 """
 Unit tests for the password generator module.
-
-This module contains comprehensive tests for all functions in generator.py:
-- build_character_pool: tests for character set construction
-- generate_password: tests for password generation logic
-- check_strength: tests for password strength evaluation
 """
 
 import sys
 import os
-
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 import unittest
@@ -22,12 +16,7 @@ from src.generator import (
 
 
 class TestBuildCharacterPool(unittest.TestCase):
-    """
-    Test suite for build_character_pool function.
-
-    Verifies that the function correctly builds character pools based on
-    user preferences for letters, digits, and symbols.
-    """
+    """Test suite for build_character_pool function."""
 
     def test_letters_only(self):
         """Should return a pool containing only alphabetic characters."""
@@ -67,12 +56,7 @@ class TestBuildCharacterPool(unittest.TestCase):
 
 
 class TestGeneratePassword(unittest.TestCase):
-    """
-    Test suite for generate_password function.
-
-    Verifies that passwords are generated correctly with the specified
-    length and character pool, including edge cases.
-    """
+    """Test suite for generate_password function."""
 
     def test_length_16(self):
         """Should generate a password of exactly 16 characters."""
@@ -124,13 +108,7 @@ class TestGeneratePassword(unittest.TestCase):
 
 
 class TestCheckStrength(unittest.TestCase):
-    """
-    Test suite for check_strength function.
-
-    Verifies that password strength classification works correctly based on:
-    - Password length (16-29: 1 point, 30+: 2 points)
-    - Character types present (lowercase, uppercase, digits, symbols)
-    """
+    """Test suite for check_strength function."""
 
     def test_weak_short(self):
         """Very short password should be classified as 'Not Safe'."""
@@ -173,29 +151,21 @@ class TestCheckStrength(unittest.TestCase):
         self.assertEqual(result, "Not Safe")
 
     def test_score_2(self):
-        """
-        Score 2 should be 'Not Safe'.
-        Only lowercase letters + length 16 = 2 points.
-        """
+        """Score 2 should be 'Not Safe'."""
         result = check_strength("abcdefghijklmnop")
         self.assertEqual(result, "Not Safe")
 
     def test_score_3(self):
-        """
-        Score 3 should be 'Moderate'.
-        Lowercase + uppercase + length 16 = 3 points.
-        """
+        """Score 3 should be 'Moderate'."""
         result = check_strength("Abcdefghijklmnop")
         self.assertEqual(result, "Moderate")
 
     def test_score_5(self):
-        """
-        Score 5 should be 'Very Strong'.
-        All types + length 16 = 5 points.
-        """
+        """Score 5 should be 'Very Strong'."""
         result = check_strength("Abc123!@#Def456$%^")
         self.assertEqual(result, "Very Strong")
 
 
 if __name__ == "__main__":
-    unittest.main()
+    import pytest
+    pytest.main([__file__, "-v"])
