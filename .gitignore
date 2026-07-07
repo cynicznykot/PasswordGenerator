@@ -4,6 +4,13 @@ venv/
 env/
 ENV/
 
+# PyInstaller
+dist/
+build/
+*.spec
+__pycache__/
+*.pyc
+
 # IDE (PyCharm, VSCode)
 .idea/
 *.iml
