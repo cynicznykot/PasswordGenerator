@@ -1,7 +1,20 @@
+"""
+Graphical user interface for the Password Generator application.
+
+This module provides a tkinter-based GUI that allows users to:
+- Generate cryptographically secure passwords
+- Adjust password length and character types
+- Evaluate password strength in real-time
+- Copy password to clipboard
+- Save passwords to a file with service name and login/email
+
+The GUI interacts with the generator module for all core logic.
+"""
+
 import tkinter as tk
 from tkinter import ttk
 from tkinter import filedialog
-from generator import build_character_pool, generate_password, check_strength
+from src.generator import build_character_pool, generate_password, check_strength
 
 
 def main():
@@ -104,7 +117,7 @@ def main():
     Label_length.pack(pady=5)
 
     # Slider
-    scale = tk.Scale(root, from_=15, to=64, orient="horizontal", variable=length_var, length=500)
+    scale = tk.Scale(root, from_=16, to=64, orient="horizontal", variable=length_var, length=500)
     scale.pack(pady=5)
 
     # Checkboxes
