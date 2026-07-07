@@ -208,6 +208,44 @@ tests/test_generator.py::TestCheckStrength::test_weak_only_lowercase_16 PASSED
 tests/test_generator.py::TestCheckStrength::test_weak_short PASSED
 
 ============================= 25 passed in 0.03s ==============================
+
+============================= test session starts ==============================
+collecting ... collected 8 items
+
+test_gui.py::TestGuiVariables::test_length_var_default SKIPPED (GUI
+tests are slow, skipping for now)                                        [ 12%]
+Skipped: GUI tests are slow, skipping for now
+
+test_gui.py::TestGuiVariables::test_use_digits_default SKIPPED (GUI
+tests are slow, skipping for now)                                        [ 25%]
+Skipped: GUI tests are slow, skipping for now
+
+test_gui.py::TestGuiVariables::test_use_letters_default SKIPPED (GUI
+tests are slow, skipping for now)                                        [ 37%]
+Skipped: GUI tests are slow, skipping for now
+
+test_gui.py::TestGuiVariables::test_use_symbols_default SKIPPED (GUI
+tests are slow, skipping for now)                                        [ 50%]
+Skipped: GUI tests are slow, skipping for now
+
+test_gui.py::TestGuiVariables::test_variables_created SKIPPED (GUI tests
+are slow, skipping for now)                                              [ 62%]
+Skipped: GUI tests are slow, skipping for now
+
+test_gui.py::TestGuiFunctions::test_copy_password_called SKIPPED (GUI
+tests are slow, skipping for now)                                        [ 75%]
+Skipped: GUI tests are slow, skipping for now
+
+test_gui.py::TestGuiFunctions::test_on_generate_called SKIPPED (GUI
+tests are slow, skipping for now)                                        [ 87%]
+Skipped: GUI tests are slow, skipping for now
+
+test_gui.py::TestGuiFunctions::test_save_password_called SKIPPED (GUI
+tests are slow, skipping for now)                                        [100%]
+Skipped: GUI tests are slow, skipping for now
+
+
+============================== 8 skipped in 0.02s ==============================
 ```
 ### Технологии
 
@@ -219,11 +257,12 @@ tests/test_generator.py::TestCheckStrength::test_weak_short PASSED
 
 ### Планы по развитию
 
+- [ ] Собрать `.exe` для Windows, Linux, Mac
 - [ ] Добавить просмотр сохранённых паролей
 - [ ] Реализовать поиск по сервисам
 - [ ] Добавить шифрование файла с паролями
 - [ ] Создать автоматическую проверку обновлений
-- [ ] Собрать `.exe` для Windows
+
 
 ### Лицензия
 
