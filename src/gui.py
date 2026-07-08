@@ -30,7 +30,7 @@ def check_for_updates():
         json_data = json.loads(text)
         latest_version = json_data['tag_name']
 
-        if latest_version != APP_VERSION:
+        if latest_version.strip() != APP_VERSION.strip():
             result = messagebox.askokcancel(
                 "Update available!",
                 f"Version {latest_version} is already available.\nDo you want to open "
