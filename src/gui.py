@@ -10,6 +10,7 @@ This module provides a tkinter-based GUI that allows users to:
 
 The GUI interacts with the generator module for all core logic.
 """
+
 import json
 import urllib.request
 import tkinter as tk
@@ -22,6 +23,7 @@ from src.config import APP_VERSION, GITHUB_API_URL
 
 
 def check_for_updates():
+    # Check latest version
     try:
         url = GITHUB_API_URL
         response = urllib.request.urlopen(url)
@@ -30,7 +32,7 @@ def check_for_updates():
         json_data = json.loads(text)
         latest_version = json_data['tag_name']
 
-        if latest_version.strip() != APP_VERSION.strip():
+        if latest_version != APP_VERSION:
             result = messagebox.askokcancel(
                 "Update available!",
                 f"Version {latest_version} is already available.\nDo you want to open "
