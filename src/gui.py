@@ -18,12 +18,27 @@ from src.generator import build_character_pool, generate_password, check_strengt
 
 
 def main():
-    # Create a window
+    # Create a Window
     root = tk.Tk()
-    root.title("Your Personal Password Generator")
+    root.title("🔐 Personal Password Generator")
     root.geometry("700x600")
+    # root.configure(bg='#f0f0f0')
 
-    # Create variables
+    # Setting Styles
+    style = ttk.Style()
+    style.configure('TLabel', font=('Arial', 12))
+    style.configure('TButton', font=('Arial', 12), padding=5)
+    # style.configure('TFrame', background='#f0f0f0')
+
+    # Main Frame
+    main_frame = ttk.Frame(root, padding='20')
+    main_frame.pack(fill='both', expand=True)
+
+    # Headline
+    title = ttk.Label(main_frame, text="🔐 Personal Password Generator", font=('Arial', 18, 'bold'))
+    title.pack(pady=(0, 15))
+
+    # Create Variables
     length_var = tk.IntVar(value=16)
     use_letters = tk.BooleanVar(value=True)
     use_digits = tk.BooleanVar(value=True)
@@ -34,34 +49,33 @@ def main():
 
 
     def on_generate():
-        # Retrieving values
+        # Retrieving Values
         length = length_var.get()
         letters = use_letters.get()
         digits = use_digits.get()
         symbols = use_symbols.get()
 
-        # Type checking
+        # Type Checking
         if not (letters or digits or symbols):
-            password_var.set("⚠️ Select at least one character type.")
-            return
+            return password_var.set("⚠️ Select at least one character type.")
 
-        # Func generated password
+        # Func Generated Password
         pool = build_character_pool(letters, digits, symbols)
         password = generate_password(length, pool)
-        # Final result
         password_var.set(password)
 
-        # Password strength indicator
+        # Password Strength Indicator
         strength = check_strength(password)
         if strength == "Not Safe":
-            strength_label.config(text="🔴 Not Safe!", fg="red")
-        elif strength == "Moderate":
-            strength_label.config(text="🟡 Moderate", fg="orange")
+            strength_label.config(text="🔴 Not Safe!", fg='red')
+        elif strength == 'Moderate':
+            strength_label.config(text="🟡 Moderate", fg='orange')
         else:
-            strength_label.config(text="🟢 Very Strong!", fg="green")
+            strength_label.config(text="🟢 Very Strong!", fg='green')
 
 
     def copy_password():
+        # Copied Password
         password = password_var.get()
         if password:
             root.clipboard_clear()
@@ -71,24 +85,22 @@ def main():
 
 
     def save_password():
+        # Save Password
         password = password_var.get()
         service = entry_service.get().strip()
         login = entry_email.get().strip()
 
         if not password:
-            password_var.set("⚠️ Generate a password!")
-            return
+            return password_var.set("⚠️ Generate a password!")
 
         if not service:
-            service_var.set("⚠️ Empty a service name!")
-            return
+            return service_var.set("⚠️ Empty a service name!")
 
         if not login:
-            login_var.set("⚠️ Empty a login/email name!")
-            return
+            return login_var.set("⚠️ Empty a login/email name!")
 
 
-        # File selection dialog
+        # File Selection Dialog
         file_path = filedialog.asksaveasfilename(
             title="Save password file",
             defaultextension=".txt",
@@ -101,7 +113,7 @@ def main():
             return
 
         # Saving to the selected file
-        with open(file_path, "a", encoding="utf-8") as file:
+        with open(file_path, 'a', encoding="utf-8") as file:
             file.write(f"Service: {service} | Login/email: {login} | Password: {password}\n")
 
         password_var.set(f"✅ Saved to: {file_path}")
@@ -113,81 +125,72 @@ def main():
     # ---- INTERFACE ELEMENTS ----
 
     # Length mark
-    Label_length = tk.Label(root, text="Length Password:", font=("Arial", 15))
-    Label_length.pack(pady=5)
+    ttk.Label(main_frame, text="Length Password:").pack(anchor='center')
 
     # Slider
-    scale = tk.Scale(root, from_=16, to=64, orient="horizontal", variable=length_var, length=500)
-    scale.pack(pady=5)
+    scale = tk.Scale(main_frame, from_=16, to=64, orient="horizontal", variable=length_var, length=400, resolution=1)
+    scale.pack(fill='x', pady=(0, 10))
+    ttk.Label(main_frame, textvariable=length_var, font=('Arial', 12)).pack()
 
     # Checkboxes
-    check_letters = tk.Checkbutton(root, text="Use Letters", variable=use_letters, font=("Arial", 13))
-    check_letters.pack(pady=5)
-
-    check_digits = tk.Checkbutton(root, text="Use Digits", variable=use_digits, font=("Arial", 13))
-    check_digits.pack(pady=5)
-
-    check_symbols = tk.Checkbutton(root, text="Use Symbols", variable=use_symbols, font=("Arial", 13))
-    check_symbols.pack(pady=5)
+    ttk.Checkbutton(main_frame, text="Use Letters", variable=use_letters).pack(anchor='w')
+    ttk.Checkbutton(main_frame, text="Use Digits", variable=use_digits).pack(anchor='w')
+    ttk.Checkbutton(main_frame, text="Use Symbols", variable=use_symbols).pack(anchor='w', pady=(0, 10))
 
     # Your service name
-    label_service = tk.Label(root, text="Your Service name:", font=("Arial", 15))
-    label_service.pack(pady=5)
+    ttk.Label(main_frame, text="Service name:").pack(anchor='w')
+    entry_service = ttk.Entry(main_frame, textvariable=service_var, width=30, font=('Arial', 11))
+    entry_service.pack(fill='x', pady=(0, 5))
 
-    entry_service = tk.Entry(root, textvariable=service_var, width=30,font=("Arial", 15), justify="center")
-    entry_service.pack(pady=5)
-
-    # Your nickname/mail
-    label_mail = tk.Label(root, text="Your mail or login:", font=("Arial", 15))
-    label_mail.pack(pady=5)
-
-    entry_email = tk.Entry(root, textvariable=login_var, width=30, font=("Arial", 15), justify="center")
-    entry_email.pack(pady=5)
+    # Your login/email
+    ttk.Label(main_frame, text="Login or email:").pack(anchor='w')
+    entry_email = ttk.Entry(main_frame, textvariable=login_var, width=30, font=('Arial', 11))
+    entry_email.pack(fill='x', pady=(0, 10))
 
     # Button
-    button = tk.Button(root, text="Generate Password", command=on_generate, font=("Arial", 17))
-    button.pack(pady=5)
+    generate_btn = ttk.Button(main_frame, text="🎲 Generate Password", command=on_generate)
+    generate_btn.pack(pady=(10, 5))
 
     # Password field
-    entry = tk.Entry(root, textvariable=password_var, width=70, font=("Arial", 12), justify="center")
-    entry.pack(pady=5)
+    entry_password = ttk.Entry(main_frame, textvariable=password_var, width=40, font=('Arial', 12))
+    entry_password.pack(fill='x', pady=(5, 5))
 
     # Password strength indicator
     strength_label = tk.Label(
-        root,
+        main_frame,
         text="",
-        font=("Arial", 12, "bold"),
+        font=('Arial', 12, 'bold'),
         pady=5,
     )
 
     strength_label.pack()
 
     copy_button = tk.Button(
-        root,
+        main_frame,
         text="📋 Copy to clipboard",
         command=copy_password,
-        font=("Arial", 12),
-        bg="#2196F3",
-        fg="white",
+        font=('Arial', 12),
+        bg='#2196F3',
+        fg='white',
         padx=15,
         pady=5,
     )
     copy_button.pack(pady=5)
 
     save_button = tk.Button(
-        root,
+        main_frame,
         text="💾 Save the password to file",
         command=save_password,
-        font=("Arial", 12),
-        bg="#FF9800",
-        fg="white",
+        font=('Arial', 12),
+        bg='#FF9800',
+        fg='white',
         padx=15,
         pady=5,
     )
 
     save_button.pack(pady=5)
 
-    # Launch window
+    # Launch Window
     root.mainloop()
 
 
