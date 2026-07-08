@@ -10,25 +10,45 @@ This module provides a tkinter-based GUI that allows users to:
 
 The GUI interacts with the generator module for all core logic.
 """
-
+import json
+import urllib.request
 import tkinter as tk
 from tkinter import ttk
 from tkinter import filedialog
+from tkinter import messagebox
 from src.generator import build_character_pool, generate_password, check_strength
+from src.config import APP_VERSION, GITHUB_API_URL
 
+
+def check_for_updates():
+    try:
+        url = "https://api.github.com/repos/cynicznykot/PasswordGenerator/releases/latest"
+        response = urllib.request.urlopen(url)
+        data = response.read()
+        text = data.decode('utf-8')
+        json_data = json.loads(text)
+        latest_version = json_data['tag_name']
+
+        if latest_version != APP_VERSION:
+            messagebox.showinfo(
+                "Update available!",
+                f"Version {latest_version} is already available.\nDownload it from GitHub."
+            )
+
+    except Exception:
+        pass
 
 def main():
     # Create a Window
     root = tk.Tk()
     root.title("🔐 Personal Password Generator")
     root.geometry("700x600")
-    # root.configure(bg='#f0f0f0')
+    root.after(1000, check_for_updates)
 
     # Setting Styles
     style = ttk.Style()
     style.configure('TLabel', font=('Arial', 12))
     style.configure('TButton', font=('Arial', 12), padding=5)
-    # style.configure('TFrame', background='#f0f0f0')
 
     # Main Frame
     main_frame = ttk.Frame(root, padding='20')
