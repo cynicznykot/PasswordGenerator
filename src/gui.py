@@ -49,7 +49,7 @@ def main():
     # Create a Window
     root = tk.Tk()
     root.title("🔐 Personal Password Generator")
-    root.geometry("700x600")
+    root.geometry("700x650")
     root.after(1000, check_for_updates)
 
     # Setting Styles
@@ -58,12 +58,13 @@ def main():
     style.configure('TButton', font=('Arial', 12), padding=5)
 
     # Main Frame
-    main_frame = ttk.Frame(root, padding='20')
+    main_frame = ttk.Frame(root, padding='20', borderwidth=0, relief='flat')
     main_frame.pack(fill='both', expand=True)
 
     # Headline
     title = ttk.Label(main_frame, text="🔐 Personal Password Generator", font=('Arial', 18, 'bold'))
     title.pack(pady=(0, 15))
+
 
     # Create Variables
     length_var = tk.IntVar(value=16)
@@ -73,6 +74,7 @@ def main():
     password_var = tk.StringVar(value="")
     service_var = tk.StringVar(value="")
     login_var = tk.StringVar(value="")
+    theme_var = tk.StringVar(value='light')
 
 
     def on_generate():
@@ -111,6 +113,51 @@ def main():
             root.after(2000, lambda: password_var.set(password))
 
 
+    def apply_theme(theme):
+        style = ttk.Style()
+
+        if theme == 'light':
+            top_frame.config(bg='white')
+            root.configure(background='white')
+            style.configure('TFrame', background='white')
+            style.configure('TCheckbutton', background='white', foreground='black')
+            style.configure('TButton', background='white', foreground='black')
+            style.configure('TLabel', background='white', foreground='black')
+            style.configure('TEntry', fieldbackground='white')
+
+            strength_label.config(background='white', foreground='black')
+            copy_button.config(background='#2196F3', foreground='white')
+            save_button.config(background='#FF9800', foreground='white')
+            main_frame.configure(style="TFrame")
+
+        if theme == 'dark':
+            top_frame.config(bg='#1e1e1e')
+            root.configure(background='#1e1e1e')
+            style.configure('TFrame', background='#1e1e1e', borderwidth=0, relief='flat')
+            style.configure('TCheckbutton', background='#1e1e1e', foreground='white')
+            style.configure('TLabel', background='#1e1e1e', foreground='white')
+            style.configure('TEntry', fieldbackground='#2d2d2d', foreground='white', insertcolor='white')
+
+            # Scale
+            scale.config(background='#1e1e1e', foreground='white', troughcolor='#2b2b2b')
+
+            # Checkboxes
+            style.map('TCheckbutton', background=[('active', '#1e1e1e'), ('selected', '#1e1e1e')])
+
+            # Manual widgets
+            generate_btn.config(background='#4CAF50', foreground='white')
+            strength_label.config(background='#1e1e1e', foreground='white')
+            copy_button.config(background='#0d47a1', foreground='white')
+            save_button.config(background='#e65100', foreground='white')
+
+            main_frame.configure(style="TFrame")
+
+
+    def toggle_theme():
+        # Func change theme
+        pass
+
+
     def save_password():
         # Save Password
         password = password_var.get()
@@ -125,7 +172,6 @@ def main():
 
         if not login:
             return login_var.set("⚠️ Empty a login/email name!")
-
 
         # File Selection Dialog
         file_path = filedialog.asksaveasfilename(
@@ -166,20 +212,53 @@ def main():
 
     # Your service name
     ttk.Label(main_frame, text="Service name:").pack(anchor='w')
-    entry_service = ttk.Entry(main_frame, textvariable=service_var, width=30, font=('Arial', 11))
+    entry_service = tk.Entry(
+        main_frame,
+        textvariable=service_var,
+        width=40,
+        font=('Arial', 12),
+        bg='white',
+        fg='black',
+        insertbackground='white',
+    )
     entry_service.pack(fill='x', pady=(0, 5))
 
     # Your login/email
     ttk.Label(main_frame, text="Login or email:").pack(anchor='w')
-    entry_email = ttk.Entry(main_frame, textvariable=login_var, width=30, font=('Arial', 11))
+    entry_email = tk.Entry(
+        main_frame,
+        textvariable=login_var,
+        width=40,
+        font=('Arial', 12),
+        bg='white',
+        fg='black',
+        insertbackground='white',
+    )
     entry_email.pack(fill='x', pady=(0, 10))
 
     # Button
-    generate_btn = ttk.Button(main_frame, text="🎲 Generate Password", command=on_generate)
+    generate_btn = tk.Button(
+        main_frame,
+        text="🎲 Generate Password",
+        command=on_generate,
+        font=('Arial', 12),
+        bg='#4CAF50',
+        fg='white',
+        padx=20,
+        pady=8
+    )
     generate_btn.pack(pady=(10, 5))
 
     # Password field
-    entry_password = ttk.Entry(main_frame, textvariable=password_var, width=40, font=('Arial', 12))
+    entry_password = tk.Entry(
+        main_frame,
+        textvariable=password_var,
+        width=40,
+        font=('Arial', 12),
+        bg='white',
+        fg='black',
+        insertbackground='white',
+    )
     entry_password.pack(fill='x', pady=(5, 5))
 
     # Password strength indicator
@@ -217,7 +296,24 @@ def main():
 
     save_button.pack(pady=5)
 
+    # Button Theme
+    top_frame = tk.Frame(main_frame, borderwidth=0, highlightthickness=0, bg='#1e1e1e')
+    top_frame.pack(fill='x', pady=(0, 15))
+
+    theme_toggle = tk.Button(
+        top_frame,
+        text="🌙 Dark Theme",
+        command=toggle_theme,
+        font=('Arial', 10),
+        bg='#2196F3',
+        fg='white',
+        padx=10,
+        pady=5,
+    )
+    theme_toggle.pack(side='right', padx=5)
+
     # Launch Window
+    apply_theme('dark')
     root.mainloop()
 
 
