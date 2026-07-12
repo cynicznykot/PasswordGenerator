@@ -12,9 +12,12 @@ The GUI interacts with the generator module for all core logic.
 """
 
 import json
+import os
 import urllib.request
 import tkinter as tk
 import webbrowser
+import datetime
+from datetime import datetime, timedelta
 from tkinter import ttk
 from tkinter import filedialog
 from tkinter import messagebox
@@ -23,6 +26,15 @@ from src.config import APP_VERSION, GITHUB_API_URL
 
 
 def check_for_updates():
+    if os.path.exists("settings.json"):
+        with open("settings.json", "r", encoding="utf-8") as f:
+            data = json.load(f)
+            last_dismissed = data.get("last_dismissed")
+            if last_dismissed:
+                saved_time = datetime.strptime(last_dismissed, "%Y-%m-%d %H:%M:%S")
+                if datetime.now() - saved_time < timedelta(hours=24):
+                    return
+
     # Check latest version
     try:
         url = GITHUB_API_URL
@@ -33,7 +45,7 @@ def check_for_updates():
         latest_version = json_data['tag_name']
 
         if latest_version != APP_VERSION:
-            result = messagebox.askokcancel(
+            result = messagebox.askyesnocancel(
                 "Update available!",
                 f"Version {latest_version} is already available.\nDo you want to open "
                 f"the download page?"
@@ -41,8 +53,20 @@ def check_for_updates():
             if result:
                 import webbrowser
                 webbrowser.open("https://github.com/cynicznykot/PasswordGenerator/releases/latest")
+            elif result is False:
+                save_dismiss_time()
     except Exception:
         pass
+
+
+def save_dismiss_time():
+    now_time = datetime.now()
+    save_time = now_time.strftime("%Y-%m-%d %H:%M:%S")
+
+    data = {"last_dismissed": save_time}
+
+    with open("settings.json", "w", encoding="utf-8") as f:
+        json.dump(data, f, ensure_ascii=False, indent=4)
 
 
 def main():
@@ -50,22 +74,22 @@ def main():
     root = tk.Tk()
     root.title("🔐 Personal Password Generator")
     root.geometry("700x650")
-    root.after(1000, check_for_updates)
 
+    root.after(1000, check_for_updates)
     # Setting Styles
     style = ttk.Style()
     style.configure('TLabel', font=('Arial', 12))
-    style.configure('TButton', font=('Arial', 12), padding=5)
 
+    style.configure('TButton', font=('Arial', 12), padding=5)
     # Main Frame
     main_frame = ttk.Frame(root, padding='20', borderwidth=0, relief='flat')
-    main_frame.pack(fill='both', expand=True)
 
+    main_frame.pack(fill='both', expand=True)
     # Headline
     title = ttk.Label(main_frame, text="🔐 Personal Password Generator", font=('Arial', 18, 'bold'))
+
+
     title.pack(pady=(0, 15))
-
-
     # Create Variables
     length_var = tk.IntVar(value=16)
     use_letters = tk.BooleanVar(value=True)
@@ -74,6 +98,8 @@ def main():
     password_var = tk.StringVar(value="")
     service_var = tk.StringVar(value="")
     login_var = tk.StringVar(value="")
+
+
     theme_var = tk.StringVar(value='light')
 
 
