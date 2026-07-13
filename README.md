@@ -90,6 +90,12 @@ Windows:
 
 ![Пример интерфейса](images/screenshot_save_password_win.png)
 
+Linux:
+
+![Пример интерфейса](images/screenshot_main_linux.png)
+
+![Пример интерфейса](images/screenshot_save_password_linux.png)
+
 ---
 
 ## Быстрый старт

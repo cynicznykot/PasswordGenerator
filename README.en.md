@@ -90,6 +90,12 @@ Windows:
 
 ![Example Interface](images/screenshot_save_password_win.png)
 
+Linux:
+
+![Example Interface](images/screenshot_main_linux.png)
+
+![Example Interface](images/screenshot_save_password_linux.png)
+
 ---
 
 ## Quick Start
