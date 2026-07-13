@@ -268,8 +268,8 @@ Skipped: GUI tests are slow, skipping for now
 - [x] ✅ **Automatic update checker** — the program checks for a new version at startup.
 - [x] ✅ **Improved interface** — updated design with `ttk` and cleaner layout.
 - [x] ✅ **Build for Windows and Linux** — ready-to-download executable files.
-- [ ] 🔜 **Light / Dark theme toggle** — switch between light and dark interface modes.
-- [ ] 🔜 **"Don't remind me about update" button** — dismiss update notifications for 24 hours.
+- [x] ✅ **Light / Dark theme toggle** — switch between light and dark interface modes.
+- [x] ✅ **"Don't remind me about update" button** — dismiss update notifications for 24 hours.
 - [ ] ⏳ **Saved passwords viewer** — a list of all entries with search, sorting, and filtering.
 - [ ] ⏳ **Search by service name** — quick password lookup by service name.
 - [ ] ⏳ **Import and export of passwords** — support for `.docx` (Word), `.csv` (Excel/Google Sheets), and `.json` (for data transfer).
