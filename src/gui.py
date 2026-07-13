@@ -30,11 +30,15 @@ def check_for_updates():
     if os.path.exists("settings.json"):
         with open("settings.json", "r", encoding="utf-8") as f:
             data = json.load(f)
-            last_dismissed = data.get("last_dismissed")
-            if last_dismissed:
-                saved_time = datetime.strptime(last_dismissed, "%Y-%m-%d %H:%M:%S")
-                if datetime.now() - saved_time < timedelta(hours=24):
-                    return
+
+            if data.get("app_version") != APP_VERSION:
+                os.remove("settings.json")
+            else:
+                last_dismissed = data.get("last_dismissed")
+                if last_dismissed:
+                    saved_time = datetime.strptime(last_dismissed, "%Y-%m-%d %H:%M:%S")
+                    if datetime.now() - saved_time < timedelta(hours=24):
+                        return
 
     # Check latest version
     try:
@@ -65,7 +69,8 @@ def save_dismiss_time():
     now_time = datetime.now()
     save_time = now_time.strftime("%Y-%m-%d %H:%M:%S")
 
-    data = {"last_dismissed": save_time}
+    data = {"last_dismissed": save_time,
+            "app_version": APP_VERSION}
 
     with open("settings.json", "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=4)
