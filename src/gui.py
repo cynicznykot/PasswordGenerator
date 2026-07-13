@@ -74,6 +74,8 @@ def main():
     root = tk.Tk()
     root.title("🔐 Personal Password Generator")
     root.geometry("700x650")
+    root.focus_set()
+
 
     root.after(1000, check_for_updates)
     # Setting Styles
@@ -101,6 +103,27 @@ def main():
 
 
     theme_var = tk.StringVar(value='light')
+
+
+    def on_mouse_wheel(event):
+        if event.widget in (entry_service, entry_email, entry_password):
+            return
+
+        current = length_var.get()
+
+        if hasattr(event, 'delta') and event.delta:
+            delta = event.delta
+            new_value = current + (1 if delta > 0 else -1)
+        else:
+            if event.num == 4:
+                new_value = current + 1
+            elif event.num == 5:
+                new_value = current - 1
+            else:
+                return
+
+        if 16 <= new_value <= 64:
+            length_var.set(new_value)
 
 
     def on_generate():
@@ -253,6 +276,10 @@ def main():
         troughcolor='lightgray',
     )
     scale.pack(pady=(0, 10))
+
+    root.bind("<MouseWheel>", on_mouse_wheel)
+    root.bind("<Button-4>", on_mouse_wheel)
+    root.bind("<Button-5>", on_mouse_wheel)
 
     length_label = tk.Label(
         main_frame,
