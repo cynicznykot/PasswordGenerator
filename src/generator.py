@@ -13,7 +13,6 @@ and it's used by both the CLI and the GUI versions of the application.
 from secrets import choice
 import string
 import time
-import sys
 
 
 # ===============================================================================================
@@ -81,7 +80,9 @@ def get_character_options():
 
 def build_character_pool(user_letters, user_digits, user_symbols):
     """
-    Input data for the settings for the future password.
+    Build a character pool based on user preferences.
+
+    Returns a string containing allowed characters for password generation.
     """
     characters = ""
     if user_letters:
@@ -133,11 +134,11 @@ def check_strength(password):
 
     # Return result
     if score <= 2:
-        return f"Not Safe"
+        return "Not Safe"
     elif score <= 4:
-        return f"Moderate"
+        return "Moderate"
     else:
-        return f"Very Strong"
+        return "Very Strong"
 
 
 def generate_again():
@@ -145,10 +146,10 @@ def generate_again():
     Asks the user if he wants to repeat the generation of a new password.
     """
     user_answer = input("Do you want to generate another password? (y/n): ").lower()
-    possitive = ['y', 'yes', 'yeah', 'da', 'd', 'a']
+    positive = ['y', 'yes', 'yeah', 'da', 'd', 'a']
     negative = ['n', 'no', 'not', 'net', 'nope']
 
-    if user_answer in possitive:
+    if user_answer in positive:
         return True
     elif user_answer in negative:
         return False
