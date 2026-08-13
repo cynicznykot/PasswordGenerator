@@ -6,6 +6,9 @@
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Tests](https://img.shields.io/badge/Tests-pytest-brightgreen.svg)](tests/)
 [![Platform](https://img.shields.io/badge/Platform-Linux%20%7C%20Windows%20%7C%20macOS-lightgrey.svg)]()
+[![Version](https://img.shields.io/badge/Version-v1.0.2-blue.svg)](https://github.com/cynicznykot/PasswordGenerator/releases)
+[![Last Release](https://img.shields.io/badge/Release-July%202026-brightgreen.svg)](https://github.com/cynicznykot/PasswordGenerator/releases)
+
 
 ---
 
@@ -86,15 +89,12 @@
 
 Windows:
 
-![Пример интерфейса](images/screenshot_main_win.png)
+## 📸 Скриншоты
 
-![Пример интерфейса](images/screenshot_save_password_win.png)
-
-Linux:
-
-![Пример интерфейса](images/screenshot_main_linux.png)
-
-![Пример интерфейса](images/screenshot_save_password_linux.png)
+| Windows | Linux |
+|:---:|:---:|
+| ![Главное окно Windows](images/screenshot_main_win.png) | ![Главное окно Linux](images/screenshot_main_linux.png) |
+| ![Сохранение Windows](images/screenshot_save_password_win.png) | ![Сохранение Linux](images/screenshot_save_password_linux.png) |
 
 ---
 
@@ -160,7 +160,7 @@ PasswordGenerator/
 ├── images/                # Скриншоты для README
 ├── .gitignore             # Игнорируемые файлы Git
 ├── LICENSE                # Лицензия MIT
-├── README.md              # Документация (русский)
+├── README.ru.md              # Документация (русский)
 ├── README.en.md           # Документация (английский)
 └── requirements.txt       # Зависимости
 ```

@@ -160,7 +160,7 @@ PasswordGenerator/
 ├── images/                # Screenshots for README
 ├── .gitignore             # Git ignore rules
 ├── LICENSE                # MIT License
-├── README.md              # Documentation (Russian)
+├── README.ru.md              # Documentation (Russian)
 ├── README.en.md           # Documentation (English)
 └── requirements.txt       # Dependencies
 ```
