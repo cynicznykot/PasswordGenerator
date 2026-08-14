@@ -159,21 +159,22 @@ sudo dnf install python3-tkinter
 ## 📁 Структура проекта
 ```bash
 PasswordGenerator/
-├── src/                   # Исходный код
-│   ├── __init__.py        # Пакетный файл
-│   ├── generator.py       # Логика генерации и проверки
+├── src/                   # Исходный код приложения
+│   ├── __init__.py        # Инициализация пакета
+│   ├── generator.py       # Логика генерации паролей и проверки сложности
 │   ├── gui.py             # Графический интерфейс (tkinter)
-│   └── main.py            # Точка входа
-├── tests/                 # Тесты
-│   ├── __init__.py
-│   ├── test_generator.py  # 25 тестов для логики
+│   └── main.py            # Точка входа в приложение
+├── tests/                 # Модульные Тесты
+│   ├── __init__.py        # Тестовый пакет
+│   ├── test_generator.py  # 25 тестов для логики генерации
 │   └── test_gui.py        # 8 тестов для GUI (пропущены)
-├── images/                # Скриншоты для README
-├── .gitignore             # Игнорируемые файлы Git
+├── images/                # Скриншоты для README (Windows/Linux)
+├── .gitignore             # Правила игнорирования Git
 ├── LICENSE                # Лицензия MIT
-├── README.ru.md           # Документация (русский)
-├── README.en.md           # Документация (английский)
-└── requirements.txt       # Зависимости
+├── README.ru.md           # README на русском
+├── README.md              # Основной README со ссылками
+├── README.en.md           # README на английском
+└── requirements.txt       # Зависимости для запуска (pytest)
 ```
 
 ## 🧪 Запуск тестов
