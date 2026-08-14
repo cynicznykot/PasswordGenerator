@@ -6,21 +6,27 @@
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Tests](https://img.shields.io/badge/Tests-pytest-brightgreen.svg)](tests/)
 [![Platform](https://img.shields.io/badge/Platform-Linux%20%7C%20Windows%20%7C%20macOS-lightgrey.svg)]()
+[![Version](https://img.shields.io/badge/Version-v1.0.2-blue.svg)](https://github.com/cynicznykot/PasswordGenerator/releases)
+[![Last Release](https://img.shields.io/badge/Release-July%202026-brightgreen.svg)](https://github.com/cynicznykot/PasswordGenerator/releases)
 
 ---
 
 ## 📖 Table of Contents
 
-- [About the Project](#about-the-project)
-- [Features](#features)
-- [How to Use](#how-to-use)
-- [Quick Start](#quick-start)
-- [Project Structure](#project-structure)
-- [Running Tests](#running-tests)
-- [Technologies](#technologies)
-- [Roadmap](#roadmap)
-- [License](#license)
-- [Author](#author)
+- [📌 About the Project](#-about-the-project)
+- [✨ Features](#-features)
+- [🚀 How to Use](#-how-to-use)
+- [🖼️ Screenshots](#️-screenshots)
+- [⚡ Quick Start](#-quick-start)
+- [📁 Project Structure](#-project-structure)
+- [🧪 Running Tests](#-running-tests)
+- [🛠️ Technologies](#️-technologies)
+- [🗺️ Roadmap](#️-roadmap)
+- [🤝 How to Contribute](#-how-to-contribute)
+- [📄 License](#-license)
+- [👤 Author](#-author)
+- [🙏 Acknowledgments](#-acknowledgments)
+- [⭐ Support the Project](#-support-the-project)
 
 ---
 
