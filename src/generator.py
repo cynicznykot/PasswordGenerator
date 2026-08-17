@@ -15,6 +15,9 @@ import string
 import time
 import os
 
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+PASSWORDS_FILE = os.path.join(BASE_DIR, "passwords.txt")
+
 
 # ===============================================================================================
 # 1. AUXILIARY FUNCTIONS
@@ -159,7 +162,9 @@ def generate_again():
         return generate_again()
 
 
-def load_passwords(file_path="passwords.txt"):
+def load_passwords(file_path=PASSWORDS_FILE):
+    print(f"Looking for file: {file_path}")
+    print(f"File exists: {os.path.exists(file_path)}")
     if not os.path.exists(file_path):
         return []
 

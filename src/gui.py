@@ -79,20 +79,28 @@ def save_dismiss_time():
 def show_passwords(root):
     win = tk.Toplevel(root)
     win.title("Your Passwords")
-    win.geometry("700x650")
+    win.geometry("700x600")
 
-    passwords = load_passwords()
+    all_passwords = load_passwords()
 
-    if not passwords:
+    if not all_passwords:
         tk.Label(win, text="No passwords found.", font=('Arial', 14)).pack(pady=20)
         return
+
+    search_frame = ttk.Frame(win)
+    search_frame.pack(fill='x', padx=10, pady=10)
+
+    ttk.Label(search_frame, text="Search by service:").pack(side='left', padx=5)
+
+    search_entry = ttk.Entry(search_frame, width=30)
+    search_entry.pack(side='left', padx=5)
 
     tree = ttk.Treeview(win, columns=("Service", "Login", "Password"), show="headings")
     tree.heading("Service", text="Service")
     tree.heading("Login", text="Login / Email")
     tree.heading("Password", text="Password")
 
-    for p in passwords:
+    for p in all_passwords:
         tree.insert("", "end", values=(p["service"], p["login"], p["password"]))
 
     tree.pack(fill="both", expand=True, padx=10, pady=10)
