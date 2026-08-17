@@ -297,11 +297,12 @@ If you'd like to contribute to this project:
 4. 📤 Push to the branch: git push origin feature/amazing-feature
 5. 📬 Open a Pull Request
 
-### License 
+## 📄 License 
 
-Distributed under the **MIT**. See the [LICENSE](LICENSE) file for details.
+Distributed under the MIT License.
+See the LICENSE file for details.
 
-## Author
+## 👤 Author
 
 **CynicznyKot**
 
@@ -310,7 +311,17 @@ Distributed under the **MIT**. See the [LICENSE](LICENSE) file for details.
 
 ---
 
-## Support the Project
+## 🙏 Acknowledgments
 
-If you liked this project, please give it a ⭐ on GitHub! I would be very grateful! 😊
+- Inspired by my own ideas — building tools I actually use and find useful.
+- Thanks to everyone who provided advice, tested, and supported the project.
+- Special thanks to the Python community for its incredible ecosystem. ❤️
+- Built with Python and love ❤️
+
+---
+
+## ⭐ Support the Project
+
+If you liked this project, please give it a ⭐ on GitHub!
+It really helps with motivation and visibility. 😊
 
