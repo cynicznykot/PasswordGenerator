@@ -21,7 +21,7 @@ from datetime import datetime, timedelta
 from tkinter import ttk
 from tkinter import filedialog
 from tkinter import messagebox
-from src.generator import build_character_pool, generate_password, check_strength
+from src.generator import build_character_pool, generate_password, check_strength, load_passwords
 from src.config import APP_VERSION, GITHUB_API_URL
 
 
@@ -74,6 +74,28 @@ def save_dismiss_time():
 
     with open("settings.json", "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=4)
+
+
+def show_passwords(root):
+    win = tk.Toplevel(root)
+    win.title("Your Passwords")
+    win.geometry("700x650")
+
+    passwords = load_passwords()
+
+    if not passwords:
+        tk.Label(win, text="No passwords found.", font=('Arial', 14)).pack(pady=20)
+        return
+
+    tree = ttk.Treeview(win, columns=("Service", "Login", "Password"), show="headings")
+    tree.heading("Service", text="Service")
+    tree.heading("Login", text="Login / Email")
+    tree.heading("Password", text="Password")
+
+    for p in passwords:
+        tree.insert("", "end", values=(p["service"], p["login"], p["password"]))
+
+    tree.pack(fill="both", expand=True, padx=10, pady=10)
 
 
 def main():
