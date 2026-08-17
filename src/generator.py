@@ -161,7 +161,7 @@ def generate_again():
 
 def load_passwords(file_path="passwords.txt"):
     if not os.path.exists(file_path):
-        return f"❌ File '{file_path}' not found!"
+        return []
 
     passwords = []
     with open(file_path, 'r', encoding="utf-8") as f:
