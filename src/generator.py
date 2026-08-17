@@ -13,6 +13,7 @@ and it's used by both the CLI and the GUI versions of the application.
 from secrets import choice
 import string
 import time
+import os
 
 
 # ===============================================================================================
@@ -156,6 +157,38 @@ def generate_again():
     else:
         print("⚠️ Please answer 'y' or 'n'!")
         return generate_again()
+
+
+def load_passwords(file_path="passwords.txt"):
+    if not os.path.exists(file_path):
+        return f"❌ File '{file_path}' not found!"
+
+    passwords = []
+    with open(file_path, 'r', encoding="utf-8") as f:
+        for line in f:
+            line = line.strip()
+            if not line:
+                continue
+
+            parts = line.split(" | ")
+            if len(parts) != 3:
+                continue
+
+            service = parts[0].replace("Service: ", "")
+            login = parts[1].replace("Login/email: ", "")
+            password = parts[2].replace("Password: ", "")
+
+            passwords.append({
+                "service": service,
+                "login": login,
+                "password": password
+            })
+                   
+    return passwords
+
+
+def search_passwords(password, query):
+    pass
 
 
 # ============================================================================================
