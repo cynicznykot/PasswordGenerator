@@ -154,24 +154,25 @@ sudo apt install python3-tk
 sudo dnf install python3-tkinter
 ```
 
-## Project Structure
+## 📁 Project Structure
 ```bash
 PasswordGenerator/
 ├── src/                   # Source code
-│   ├── __init__.py        # Package initialization
-│   ├── generator.py       # Generation and validation logic
+│   ├── __init__.py        # Makes src a Python package
+│   ├── generator.py       # Password generation and strength logic
 │   ├── gui.py             # Graphical interface (tkinter)
-│   └── main.py            # Entry point
-├── tests/                 # Tests
-│   ├── __init__.py
-│   ├── test_generator.py  # 25 tests for logic
-│   └── test_gui.py        # 8 tests for GUI (skipped)
-├── images/                # Screenshots for README
-├── .gitignore             # Git ignore rules
+│   └── main.py            # Application entry point
+├── tests/                 # Unit tests
+│   ├── __init__.py        # Makes tests a Python package
+│   ├── test_generator.py  # 25 tests for generation logic
+│   └── test_gui.py        # 8 tests for GUI (skipped, require display)
+├── images/                # Screenshots for README (Windows/Linux)
+├── .gitignore             # Git ignore rules (venv, cache, builds)
 ├── LICENSE                # MIT License
-├── README.ru.md              # Documentation (Russian)
+├── README.ru.md           # Documentation (Russian)
+├── README.md              # Main documentation (navigation hub)
 ├── README.en.md           # Documentation (English)
-└── requirements.txt       # Dependencies
+└── requirements.txt       # Dependencies (pytest)
 ```
 
 ## Running Tests
