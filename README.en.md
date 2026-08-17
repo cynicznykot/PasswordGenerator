@@ -88,21 +88,21 @@ This project was created to practice:
 
 Service: Google | Login/email: user@gmail.com | Password: P@ssw0rd!
 
-### Example Interface
+---
 
-Your interface will look like this:
+## 🖼️ Screenshots
 
-Windows:
+### 🪟 Windows
 
-![Example Interface](images/screenshot_main_win.png)
+| Main Window | Saving Password |
+|:---:|:---:|
+| ![Main Window Windows](images/screenshot_main_win.png) | ![Saving Windows](images/screenshot_save_password_win.png) |
 
-![Example Interface](images/screenshot_save_password_win.png)
+### 🐧 Linux
 
-Linux:
-
-![Example Interface](images/screenshot_main_linux.png)
-
-![Example Interface](images/screenshot_save_password_linux.png)
+| Main Window | Saving Password |
+|:---:|:---:|
+| ![Main Window Linux](images/screenshot_main_linux.png) | ![Saving Linux](images/screenshot_save_password_linux.png) |
 
 ---
 
