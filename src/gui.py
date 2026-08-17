@@ -102,7 +102,7 @@ def main():
     # Create a Window
     root = tk.Tk()
     root.title("🔐 Personal Password Generator")
-    root.geometry("700x650")
+    root.geometry("700x700")
     root.after(1000, check_for_updates)
     root.focus_set()
 
@@ -117,7 +117,7 @@ def main():
     # Main Frame
     main_frame = ttk.Frame(root, padding='20', borderwidth=0, relief='flat')
     main_frame.pack(fill='both', expand=True)
-    
+
     view_btn = tk.Button(
         main_frame,
         text="🔍 View Passwords",
