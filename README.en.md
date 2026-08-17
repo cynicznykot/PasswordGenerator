@@ -106,7 +106,7 @@ Service: Google | Login/email: user@gmail.com | Password: P@ssw0rd!
 
 ---
 
-## Quick Start
+## ⚡ Quick Start
 
 ### Requirements
 
@@ -134,6 +134,7 @@ source .venv/bin/activate
 # Install dependencies
 pip install -r requirements.txt
 ```
+
 ### Running the application
 
 ```bash
