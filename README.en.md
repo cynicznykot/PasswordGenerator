@@ -62,9 +62,9 @@ This project was created to practice:
 
 ---
 
-## How to Use
+## 🚀 How to Use
 
-### Generating a Password
+### 🎲 Generating a Password
 
 1. **Set the length** using the slider (16–64 characters)
 2. **Select character types**:
@@ -74,17 +74,19 @@ This project was created to practice:
 3. Click **"Generate Password"**
 4. The password appears in the field with a **strength indicator** below it
 
-### Copying a Password
+### 📋 Copying a Password
 
 - Click **"📋 Copy to clipboard"** — the password is copied with a confirmation message
 
-### Saving a Password
+### 💾 Saving a Password
 
 1. **Enter the service name** (e.g., `Google`)
 2. **Enter your login or email** (e.g., `user@gmail.com`)
 3. Click **"💾 Save the password to file"**
 4. **Choose the location and file name** (default: `passwords.txt`)
-5. The entry is saved in the format: Service: Google | Login/email: user@gmail.com | Password: P@ssw0rd!
+5. The entry is saved in the format:
+
+Service: Google | Login/email: user@gmail.com | Password: P@ssw0rd!
 
 ### Example Interface
 
