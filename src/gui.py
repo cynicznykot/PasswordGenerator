@@ -106,6 +106,7 @@ def main():
     root.after(1000, check_for_updates)
     root.focus_set()
 
+
     # Setting Styles
     style = ttk.Style()
     style.theme_use('clam')
@@ -116,6 +117,18 @@ def main():
     # Main Frame
     main_frame = ttk.Frame(root, padding='20', borderwidth=0, relief='flat')
     main_frame.pack(fill='both', expand=True)
+    
+    view_btn = tk.Button(
+        main_frame,
+        text="🔍 View Passwords",
+        command=lambda: show_passwords(root),
+        font=('Ariel', 12),
+        bg='#9C27B0',
+        fg='white',
+        padx=15,
+        pady=5
+    )
+    view_btn.pack(pady=5)
 
     # Headline
     title = ttk.Label(main_frame, text="🔐 Personal Password Generator", font=('Arial', 18, 'bold'))
