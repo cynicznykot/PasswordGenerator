@@ -175,7 +175,7 @@ PasswordGenerator/
 └── requirements.txt       # Dependencies (pytest)
 ```
 
-## Running Tests
+## 🧪 Running Tests
 
 ### Installing Development Dependencies
 ```bash
@@ -265,7 +265,7 @@ Skipped: GUI tests are slow, skipping for now
 ============================== 8 skipped in 0.02s ==============================
 ```
 
-### Technologies
+## 🛠️ Technologies
 
 - **Python 3.8+** — programming language
 - **Tkinter** — graphical interface
@@ -273,7 +273,7 @@ Skipped: GUI tests are slow, skipping for now
 - **Unittest / Pytest** — testing
 - **Git** — version control
 
-### Roadmap
+## 🗺️ Roadmap
 
 - [x] ✅ **Automatic update checker** — the program checks for a new version at startup.
 - [x] ✅ **Improved interface** — updated design with `ttk` and cleaner layout.
