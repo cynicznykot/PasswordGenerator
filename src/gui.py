@@ -21,7 +21,7 @@ from datetime import datetime, timedelta
 from tkinter import ttk
 from tkinter import filedialog
 from tkinter import messagebox
-from src.generator import build_character_pool, generate_password, check_strength, load_passwords
+from src.generator import build_character_pool, generate_password, check_strength, load_passwords, save_passwords
 from src.generator import SETTINGS_FILE
 from src.config import APP_VERSION, GITHUB_API_URL
 
@@ -130,6 +130,40 @@ def show_passwords(root):
         tree.insert("", "end", values=(p["service"], p["login"], p["password"]))
 
     tree.pack(fill="both", expand=True, padx=10, pady=10)
+
+    btn_frame = ttk.Frame(win)
+    btn_frame.pack(fill='x', padx=10, pady=10)
+    
+    delete_btn = ttk.Button(btn_frame, text="🗑️ Delete Selected",
+                            command=lambda: delete_selected_password(tree, file_path))
+    delete_btn.pack(side='left', padx=5)
+
+
+def delete_selected_password(tree, file_path):
+    selected = tree.selection()
+    if not selected:
+        messagebox.showwarning("No selection", "Please select a password to delete.")
+        return
+
+    values = tree.item(selected[0], 'values')
+    if not values:
+        return
+
+    service, login, password = values
+
+    if not messagebox.askyesno("Delete", f"Delete password for '{service}'?"):
+        return
+
+    all_passwords = load_passwords(file_path)
+
+    new_passwords = [
+        p for p in all_passwords
+        if not (p['service'] == service and p['login'] == login and p['password'] == password)
+    ]
+
+    save_passwords(file_path, new_passwords)
+
+    tree.delete(selected[0])
 
 
 def main():
