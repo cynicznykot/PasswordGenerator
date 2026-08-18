@@ -192,7 +192,7 @@ def load_passwords(file_path=PASSWORDS_FILE):
 
 
 def save_passwords(file_path, passwords):
-    with open(file_path, "w", encoding="uft-8") as f:
+    with open(file_path, "w", encoding="utf-8") as f:
         for p in passwords:
             f.write(f"Service: {p['service']} | Login/email: {p['login']} | Password: {p['password']}\n")
 

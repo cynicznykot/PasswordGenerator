@@ -133,7 +133,7 @@ def show_passwords(root):
 
     btn_frame = ttk.Frame(win)
     btn_frame.pack(fill='x', padx=10, pady=10)
-    
+
     delete_btn = ttk.Button(btn_frame, text="🗑️ Delete Selected",
                             command=lambda: delete_selected_password(tree, file_path))
     delete_btn.pack(side='left', padx=5)
