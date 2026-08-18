@@ -118,14 +118,14 @@ def show_passwords(root):
     btn_frame.pack(fill='x', padx=10, pady=10)
 
     delete_btn = ttk.Button(btn_frame, text="🗑️ Delete Selected",
-                            command=lambda: delete_selected_password(tree, file_path))
+                            command=lambda: delete_selected_password(tree, file_path, win))
     delete_btn.pack(side='left', padx=5)
 
 
-def delete_selected_password(tree, file_path):
+def delete_selected_password(tree, file_path, parent_window):
     selected = tree.selection()
     if not selected:
-        messagebox.showwarning("No selection", "Please select a password to delete.")
+        messagebox.showwarning("No selection", "Please select a password to delete.", parent=parent_window)
         return
 
     values = tree.item(selected[0], 'values')
@@ -134,7 +134,7 @@ def delete_selected_password(tree, file_path):
 
     service, login, password = values
 
-    if not messagebox.askyesno("Delete", f"Delete password for '{service}'?"):
+    if not messagebox.askyesno("Delete", f"Delete password for '{service}'?", parent=parent_window):
         return
 
     all_passwords = load_passwords(file_path)
