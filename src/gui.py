@@ -26,26 +26,6 @@ from src.generator import SETTINGS_FILE
 from src.config import APP_VERSION, GITHUB_API_URL
 
 
-def save_password_file_path(path):
-    data = {}
-    if os.path.exists(SETTINGS_FILE):
-        with open(SETTINGS_FILE, "r", encoding="utf-8") as f:
-            data = json.load(f)
-
-    data["passwords_file"] = path
-
-    with open(SETTINGS_FILE, "w", encoding="utf-8") as f:
-        json.dump(data, f, ensure_ascii=False, indent=4)
-
-
-def load_password_file_path():
-    if os.path.exists(SETTINGS_FILE):
-        with open(SETTINGS_FILE, "r", encoding="utf-8") as f:
-            data = json.load(f)
-            return data.get("passwords_file")
-    return None
-
-
 def check_for_updates():
     # Check for updates
     if os.path.exists("settings.json"):
@@ -102,9 +82,12 @@ def show_passwords(root):
     win.title("Your Passwords")
     win.geometry("750x600")
 
-    file_path = load_password_file_path()
-    if not file_path or not os.path.exists(file_path):
-        tk.Label(win, text="No passwords file found. Please save a password first.", font=('Arial', 14)).pack(pady=20)
+    file_path = filedialog.askopenfilename(
+        title="Select passwords file",
+        filetypes=[("Text files", "*.txt"), ("All files", "*.*")]
+    )
+
+    if not file_path:
         return
 
     all_passwords = load_passwords(file_path)
