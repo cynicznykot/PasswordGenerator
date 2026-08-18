@@ -22,7 +22,28 @@ from tkinter import ttk
 from tkinter import filedialog
 from tkinter import messagebox
 from src.generator import build_character_pool, generate_password, check_strength, load_passwords
+from src.generator import SETTINGS_FILE
 from src.config import APP_VERSION, GITHUB_API_URL
+
+
+def save_password_file_path(path):
+    data = {}
+    if os.path.exists(SETTINGS_FILE):
+        with open(SETTINGS_FILE, "r", encoding="utf-8") as f:
+            data = json.load(f)
+
+    data["passwords_file"] = path
+
+    with open(SETTINGS_FILE, "w", encoding="utf-8") as f:
+        json.dump(data, f, ensure_ascii=False, indent=4)
+
+
+def load_password_file_path():
+    if os.path.exists(SETTINGS_FILE):
+        with open(SETTINGS_FILE, "r", encoding="utf-8") as f:
+            data = json.load(f)
+            return data.get("passwords_file")
+    return None
 
 
 def check_for_updates():
@@ -79,9 +100,14 @@ def save_dismiss_time():
 def show_passwords(root):
     win = tk.Toplevel(root)
     win.title("Your Passwords")
-    win.geometry("700x600")
+    win.geometry("750x600")
 
-    all_passwords = load_passwords()
+    file_path = load_password_file_path()
+    if not file_path or not os.path.exists(file_path):
+        tk.Label(win, text="No passwords file found. Please save a password first.", font=('Arial', 14)).pack(pady=20)
+        return
+
+    all_passwords = load_passwords(file_path)
 
     if not all_passwords:
         tk.Label(win, text="No passwords found.", font=('Arial', 14)).pack(pady=20)
@@ -130,7 +156,7 @@ def main():
         main_frame,
         text="🔍 View Passwords",
         command=lambda: show_passwords(root),
-        font=('Ariel', 12),
+        font=('Arial', 12),
         bg='#9C27B0',
         fg='white',
         padx=15,
@@ -293,14 +319,13 @@ def main():
             title="Save password file",
             defaultextension=".txt",
             filetypes=[("Text files", "*.txt"), ("All files", "*.*")],
-            initialfile="password.txt" # Default name for the file
+            initialfile="passwords.txt"
         )
-
-        # If the user clicked cancel - we exit
         if not file_path:
             return
 
-        # Saving to the selected file
+        save_password_file_path(file_path)
+
         with open(file_path, 'a', encoding="utf-8") as file:
             file.write(f"Service: {service} | Login/email: {login} | Password: {password}\n")
 
