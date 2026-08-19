@@ -149,6 +149,23 @@ def delete_selected_password(tree, file_path, parent_window):
     tree.delete(selected[0])
 
 
+def save_password_file_path(path):
+    data = {}
+    if os.path.exists(SETTINGS_FILE):
+        try:
+            with open(SETTINGS_FILE, "r", encoding="utf-8") as f:
+                content = f.read().strip()
+                if content:
+                    data = json.loads(content)
+        except (json.JSONDecodeError, ValueError):
+            data = {}
+
+        data["passwords_file"] = path
+
+        with open(SETTINGS_FILE, "w", encoding="utf-8") as f:
+            json.dump(data, f, ensure_ascii=False, indent=4)
+
+
 def main():
     # Create a Window
     root = tk.Tk()
