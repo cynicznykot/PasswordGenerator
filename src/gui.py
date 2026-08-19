@@ -166,6 +166,21 @@ def save_password_file_path(path):
             json.dump(data, f, ensure_ascii=False, indent=4)
 
 
+def load_password_file_path():
+    if os.path.exists(SETTINGS_FILE):
+        try:
+            with open(SETTINGS_FILE, "r", encoding="utf-8") as f:
+                content = f.read().strip()
+                if content:
+                    data = json.loads(content)
+                    if content:
+                        data = json.loads(content)
+                        return data.get("passwords_file")
+        except (json.JSONDecodeError, ValueError):
+            return None
+    return None
+
+
 def main():
     # Create a Window
     root = tk.Tk()
