@@ -82,13 +82,20 @@ def show_passwords(root):
     win.title("Your Passwords")
     win.geometry("750x600")
 
-    file_path = filedialog.askopenfilename(
-        title="Select passwords file",
-        filetypes=[("Text files", "*.txt"), ("All files", "*.*")]
-    )
+    file_path = load_password_file_path()
+
+    if file_path and not os.path.exists(file_path):
+        file_path = None
+
+    if not file_path:
+        file_path = filedialog.askopenfilename(
+            title="Select passwords file",
+            filetypes=[("Text files", "*.txt"), ("All files", "*.*")]
+        )
 
     if not file_path:
         return
+    save_password_file_path(file_path)
 
     all_passwords = load_passwords(file_path)
 
