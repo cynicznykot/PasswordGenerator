@@ -10,10 +10,12 @@ and it's used by both the CLI and the GUI versions of the application.
 """
 import json
 from secrets import choice
+from docx import Document
 import string
 import time
 import os
 import csv
+
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PASSWORDS_FILE = os.path.join(BASE_DIR, "settings.json")
@@ -227,6 +229,26 @@ def load_passwords_json(file_path):
         return []
     with open(file_path, 'r', encoding="utf-8") as f:
         return json.load(f)
+
+
+def save_passwords_docx(file_path, passwords):
+    doc = Document()
+    doc.add_heading("Saved Passwords", level=1)
+
+    table = doc.add_table(rows=1, cols=3)
+    table.style = "Table Grid"
+    hdr = table.rows[0].cells
+    hdr[0].text = "Service"
+    hdr[1].text = "Login / Email"
+    hdr[2].text = "Password"
+
+    for p in passwords:
+        row = table.add_row().cells
+        row[0].text = p["service"]
+        row[1].text = p["login"]
+        row[2].text = p["password"]
+
+    doc.save(file_path)
 
 
 def save_passwords(file_path, passwords):
