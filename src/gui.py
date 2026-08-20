@@ -374,8 +374,12 @@ def main():
         file_path = filedialog.asksaveasfilename(
             title="Save password file",
             defaultextension=".txt",
-            filetypes=[("Text files", "*.txt"), ("All files", "*.*")],
-            initialfile="passwords.txt"
+            filetypes=[
+                ("Text files", "*.txt"),
+                ("CSV files", "*.csv"),
+                ("JSON files", "*.json"),
+                ("Word files", "*.docx")
+            ]
         )
         if not file_path:
             return
