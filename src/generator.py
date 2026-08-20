@@ -198,6 +198,22 @@ def load_passwords_txt(file_path=PASSWORDS_FILE):
     return passwords
 
 
+def save_passwords(file_path, passwords):
+    ext = os.path.splitext(file_path)[1].lower()
+    if ext == ".csv":
+        return save_passwords_csv(file_path, passwords)
+    else:
+        return save_passwords_txt(file_path, passwords)
+
+
+def load_passwords(file_path):
+    ext = os.path.splitext(file_path)[1].lower()
+    if ext == ".csv":
+        return load_passwords_csv(file_path)
+    else:
+        return load_passwords_txt(file_path)
+
+
 def search_passwords(password, query):
     pass
 
