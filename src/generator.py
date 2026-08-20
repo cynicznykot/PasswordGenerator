@@ -8,8 +8,7 @@ your social media passwords.
 This module contains the core logic for generating password, evaluating their strength,
 and it's used by both the CLI and the GUI versions of the application.
 """
-
-
+import json
 from secrets import choice
 import string
 import time
@@ -198,31 +197,12 @@ def load_passwords_txt(file_path=PASSWORDS_FILE):
     return passwords
 
 
-def save_passwords(file_path, passwords):
-    ext = os.path.splitext(file_path)[1].lower()
-    if ext == ".csv":
-        return save_passwords_csv(file_path, passwords)
-    else:
-        return save_passwords_txt(file_path, passwords)
-
-
-def load_passwords(file_path):
-    ext = os.path.splitext(file_path)[1].lower()
-    if ext == ".csv":
-        return load_passwords_csv(file_path)
-    else:
-        return load_passwords_txt(file_path)
-
-
-def search_passwords(password, query):
-    pass
-
-
 def save_passwords_csv(file_path, passwords):
     with open(file_path, 'w', encoding="utf-8") as f:
         writer = csv.DictWriter(f, fieldnames=["service", "login", "password"])
         writer.writeheader()
         writer.writerows(passwords)
+
 
 def load_passwords_csv(file_path):
     passwords = []
@@ -235,6 +215,42 @@ def load_passwords_csv(file_path):
                 "password": row.get("password", "")
             })
     return passwords
+
+
+def save_passwords_json(file_path, passwords):
+    with open(file_path, 'w', encoding="utf-8") as f:
+        json.dump(passwords, f, ensure_ascii=False, indent=4)
+
+
+def load_passwords_json(file_path):
+    if not os.path.exists(file_path) or os.path.getsize(file_path) == 0:
+        return []
+    with open(file_path, 'r', encoding="utf-8") as f:
+        return json.load(f)
+
+
+def save_passwords(file_path, passwords):
+    ext = os.path.splitext(file_path)[1].lower()
+    if ext == ".csv":
+        return save_passwords_csv(file_path, passwords)
+    elif ext == ".json":
+        return save_passwords_json(file_path, passwords)
+    else:
+        return save_passwords_txt(file_path, passwords)
+
+
+def load_passwords(file_path):
+    ext = os.path.splitext(file_path)[1].lower()
+    if ext == ".csv":
+        return load_passwords_csv(file_path)
+    elif ext == ".json":
+        return load_passwords_json(file_path)
+    else:
+        return load_passwords_txt(file_path)
+
+
+def search_passwords(password, query):
+    pass
 
 
 
