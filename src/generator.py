@@ -14,6 +14,7 @@ from secrets import choice
 import string
 import time
 import os
+import csv
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PASSWORDS_FILE = os.path.join(BASE_DIR, "settings.json")
@@ -199,6 +200,19 @@ def save_passwords(file_path, passwords):
 
 def search_passwords(password, query):
     pass
+
+
+def load_passwords_csv(file_path):
+    passwords = []
+    with open(file_path, 'r', encoding="utf-8") as f:
+        reader = csv.DictReader(f)
+        for row in reader:
+            passwords.append({
+                "service": row.get("service", ""),
+                "login": row.get("login", ""),
+                "password": row.get("password", "")
+            })
+    return passwords
 
 
 # ============================================================================================
