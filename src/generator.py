@@ -251,12 +251,30 @@ def save_passwords_docx(file_path, passwords):
     doc.save(file_path)
 
 
+def load_passwords_docx(file_path):
+    doc = Document(file_path)
+    passwords = []
+    table = doc.tables[0]
+
+    for row in table.rows[1:]:
+        cells = row.cells
+        passwords.append({
+            "service": cells[0].text.strip(),
+            "login": cells[1].text.strip(),
+            "password": cells[2].text.strip()
+        })
+
+    return passwords
+
+
 def save_passwords(file_path, passwords):
     ext = os.path.splitext(file_path)[1].lower()
     if ext == ".csv":
         return save_passwords_csv(file_path, passwords)
     elif ext == ".json":
         return save_passwords_json(file_path, passwords)
+    elif ext == ".docx":
+        return save_passwords_docx(file_path, passwords)
     else:
         return save_passwords_txt(file_path, passwords)
 
@@ -267,6 +285,8 @@ def load_passwords(file_path):
         return load_passwords_csv(file_path)
     elif ext == ".json":
         return load_passwords_json(file_path)
+    elif ext == ".docx":
+        return load_passwords_docx(file_path)
     else:
         return load_passwords_txt(file_path)
 
