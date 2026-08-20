@@ -202,6 +202,12 @@ def search_passwords(password, query):
     pass
 
 
+def save_passwords_csv(file_path, passwords):
+    with open(file_path, 'w', encoding="utf-8") as f:
+        writer = csv.DictWriter(f, fieldnames=["service", "login", "password"])
+        writer.writeheader()
+        writer.writerows(passwords)
+
 def load_passwords_csv(file_path):
     passwords = []
     with open(file_path, 'r', encoding="utf-8") as f:
@@ -213,6 +219,9 @@ def load_passwords_csv(file_path):
                 "password": row.get("password", "")
             })
     return passwords
+
+
+
 
 
 # ============================================================================================
