@@ -17,7 +17,8 @@ import urllib.request
 import tkinter as tk
 import webbrowser
 import datetime
-
+import tempfile
+import shutil
 from datetime import datetime, timedelta
 from tkinter import ttk
 from tkinter import filedialog
@@ -32,12 +33,13 @@ def check_for_updates():
 
     if data.get("app_version") != APP_VERSION:
         safe_write_settings({"app_version": APP_VERSION})
-    else:
-        last_dismissed = data.get("last_dismissed")
-        if last_dismissed:
-            saved_time = datetime.strptime(last_dismissed, "%Y-%m-%d %H:%M:%S")
-            if datetime.now() - saved_time < timedelta(hours=24):
-                return
+        return
+
+    last_dismissed = data.get("last_dismissed")
+    if last_dismissed:
+        saved_time = datetime.strptime(last_dismissed, "%Y-%m-%d %H:%M:%S")
+        if datetime.now() - saved_time < timedelta(hours=24):
+            return
 
     # Check latest version
     try:
@@ -55,10 +57,12 @@ def check_for_updates():
                 f"the download page?"
             )
             if result:
-                import webbrowser
                 webbrowser.open("https://github.com/cynicznykot/PasswordGenerator/releases/latest")
             elif result is False:
-                save_dismiss_time()
+                safe_write_settings({
+                    "last_dismissed": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                    "app_version": APP_VERSION
+                })
     except Exception:
         pass
 
@@ -198,8 +202,10 @@ def safe_read_settings():
 
 def safe_write_settings(data):
     try:
-        with open("settings.json", "w", encoding="utf-8") as f:
+        fd, temp_path = tempfile.mkstemp(suffix=".json", prefix="settings_", dir=os.path.dirname("."))
+        with os.fdopen(fd, "w", encoding="utf-8") as f:
             json.dump(data, f, ensure_ascii=False, indent=4)
+        shutil.move(temp_path, "settings.json")
     except Exception:
         pass
 
