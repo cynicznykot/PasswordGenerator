@@ -17,6 +17,7 @@ import urllib.request
 import tkinter as tk
 import webbrowser
 import datetime
+
 from datetime import datetime, timedelta
 from tkinter import ttk
 from tkinter import filedialog
@@ -27,23 +28,16 @@ from src.config import APP_VERSION, GITHUB_API_URL
 
 
 def check_for_updates():
-    # Check for updates
-    if os.path.exists("settings.json"):
-        with open("settings.json", "r", encoding="utf-8") as f:
-            data = json.load(f)
+    data = safe_read_settings()
 
-            if data.get("app_version") != APP_VERSION:
-                try:
-                    os.remove("settings.json")
-                except PermissionError:
-                    with open("settings.json", "w", encoding="utf-8") as f:
-                        json.dump({"app_version": APP_VERSION}, f)
-            else:
-                last_dismissed = data.get("last_dismissed")
-                if last_dismissed:
-                    saved_time = datetime.strptime(last_dismissed, "%Y-%m-%d %H:%M:%S")
-                    if datetime.now() - saved_time < timedelta(hours=24):
-                        return
+    if data.get("app_version") != APP_VERSION:
+        safe_write_settings({"app_version": APP_VERSION})
+    else:
+        last_dismissed = data.get("last_dismissed")
+        if last_dismissed:
+            saved_time = datetime.strptime(last_dismissed, "%Y-%m-%d %H:%M:%S")
+            if datetime.now() - saved_time < timedelta(hours=24):
+                return
 
     # Check latest version
     try:
@@ -190,6 +184,24 @@ def load_password_file_path():
         except (json.JSONDecodeError, ValueError):
             return None
     return None
+
+
+def safe_read_settings():
+    try:
+        if os.path.exists("settings.json"):
+            with open("settings.json", "r", encoding="utf-8") as f:
+                return json.load(f)
+    except Exception:
+        pass
+    return {}
+
+
+def safe_write_settings(data):
+    try:
+        with open("settings.json", "w", encoding="utf-8") as f:
+            json.dump(data, f, ensure_ascii=False, indent=4)
+    except Exception:
+        pass
 
 
 def main():
