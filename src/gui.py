@@ -33,7 +33,11 @@ def check_for_updates():
             data = json.load(f)
 
             if data.get("app_version") != APP_VERSION:
-                os.remove("settings.json")
+                try:
+                    os.remove("settings.json")
+                except PermissionError:
+                    with open("settings.json", "w", encoding="utf-8") as f:
+                        json.dump({"app_version": APP_VERSION}, f)
             else:
                 last_dismissed = data.get("last_dismissed")
                 if last_dismissed:
