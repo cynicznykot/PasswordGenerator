@@ -17,6 +17,8 @@ import urllib.request
 import tkinter as tk
 import webbrowser
 import datetime
+import tempfile
+import shutil
 from datetime import datetime, timedelta
 from tkinter import ttk
 from tkinter import filedialog
@@ -26,8 +28,31 @@ from src.generator import SETTINGS_FILE
 from src.config import APP_VERSION, GITHUB_API_URL
 
 
+def safe_read_settings():
+    try:
+        if os.path.exists("settings.json"):
+            with open("settings.json", "r", encoding="utf-8") as f:
+                return json.load(f)
+    except Exception:
+        pass
+    return {}
+
+
+def safe_write_settings():
+    try:
+        fd, temp_path = tempfile.mkstemp(suffix=".json", prefix="settings_", dir=os.path.dirname("."))
+        with os.fdopen(fd, "w", encoding="utf-8") as f:
+            json.dump(data, f, ensure_ascii=False, indent=4)
+        shutil.move(temp_path, "settings.json")
+    except Exception:
+        pass
+
+
 def check_for_updates():
     # Check for updates
+
+    data = safe_read_settings()
+
     if os.path.exists("settings.json"):
         with open("settings.json", "r", encoding="utf-8") as f:
             data = json.load(f)
