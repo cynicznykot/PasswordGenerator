@@ -29,6 +29,12 @@ from src.config import APP_VERSION, GITHUB_API_URL
 
 
 def safe_read_settings():
+    """
+    Safely read settings from settings.json.
+
+    Return an empty dict if the file doesn't exist or cannot be read.
+    This prevents crashes on Windows when the file is locked by another process.
+    """
     try:
         if os.path.exists("settings.json"):
             with open("settings.json", "r", encoding="utf-8") as f:
@@ -39,7 +45,13 @@ def safe_read_settings():
 
 
 def safe_write_settings():
+    """
+    Safely write settings to settings.json using a temporary file.
+
+    Uses an atomic move operation to prevent file corruption on Windows.
+    """
     try:
+        # Create a temporary file in the current directory
         fd, temp_path = tempfile.mkstemp(suffix=".json", prefix="settings_", dir=os.path.dirname("."))
         with os.fdopen(fd, "w", encoding="utf-8") as f:
             json.dump(data, f, ensure_ascii=False, indent=4)
