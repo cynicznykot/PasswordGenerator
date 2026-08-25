@@ -61,24 +61,28 @@ def safe_write_settings():
 
 
 def check_for_updates():
-    # Check for updates
+    """
+    Check for new versions on GitHub.
 
+    - Reads the last dismissed timestamp from settings.json
+    - If less than 24 hours have passed, skip the check
+    - Otherwise, fetches the latest release from GitHub API
+    - Shows a notification if a new version is available
+    """
     data = safe_read_settings()
 
-    if os.path.exists("settings.json"):
-        with open("settings.json", "r", encoding="utf-8") as f:
-            data = json.load(f)
+    # Check if the user has dismissed the notification within the last 24 hours
+    if data.get("app_version") != APP_VERSION:
+        safe_write_settings()
+        return
 
-            if data.get("app_version") != APP_VERSION:
-                os.remove("settings.json")
-            else:
-                last_dismissed = data.get("last_dismissed")
-                if last_dismissed:
-                    saved_time = datetime.strptime(last_dismissed, "%Y-%m-%d %H:%M:%S")
-                    if datetime.now() - saved_time < timedelta(hours=24):
-                        return
+    last_dismissed = data.get("last_dismissed")
+    if last_dismissed:
+        saved_time = datetime.strptime(last_dismissed, "%Y-%m-%d %H:%M:%S")
+        if datetime.now() - saved_time < timedelta(hours=24):
+            return  # Skip the update check
 
-    # Check latest version
+    # Fetch the latest release from GitHub
     try:
         url = GITHUB_API_URL
         response = urllib.request.urlopen(url)
@@ -97,7 +101,11 @@ def check_for_updates():
                 import webbrowser
                 webbrowser.open("https://github.com/cynicznykot/PasswordGenerator/releases/latest")
             elif result is False:
-                save_dismiss_time()
+                # Save the dismissal timestamp
+                safe_write_settings({
+                    "last_dismissed": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                    "app_version": APP_VERSION
+                })
     except Exception:
         pass
 
