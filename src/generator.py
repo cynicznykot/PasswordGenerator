@@ -166,16 +166,28 @@ def generate_again():
 
 
 def save_passwords_txt(file_path, passwords):
+    """
+    Save passwords to a .txt file in the format:
+    Service: ... | Login/email: ... | Password: ...
+    """
+
     with open(file_path, "w", encoding="utf-8") as f:
         for p in passwords:
             f.write(f"Service: {p['service']} | Login/email: {p['login']} | Password: {p['password']}\n")
 
 
 def load_passwords_txt(file_path=PASSWORDS_FILE):
+    """
+    Load passwords from a .txt file.
+
+    Returns a list of dictionaries: [{"service": ..., "login": ..., "password": ...}]
+    Returns an empty list if the file doesn't exist of is empty.
+    """
     if not os.path.exists(file_path):
         return []
 
     passwords = []
+
     with open(file_path, 'r', encoding="utf-8") as f:
         for line in f:
             line = line.strip()
@@ -200,6 +212,9 @@ def load_passwords_txt(file_path=PASSWORDS_FILE):
 
 
 def save_passwords_csv(file_path, passwords):
+    """
+    Save passwords to a CSV file with headers: service, login, password.
+    """
     with open(file_path, 'w', encoding="utf-8") as f:
         writer = csv.DictWriter(f, fieldnames=["service", "login", "password"])
         writer.writeheader()
@@ -207,6 +222,12 @@ def save_passwords_csv(file_path, passwords):
 
 
 def load_passwords_csv(file_path):
+    """
+    Load passwords from a CSV file.
+
+    Expects headers: service, login, password.
+    Returns a list of dictionaries.
+    """
     passwords = []
     with open(file_path, 'r', encoding="utf-8") as f:
         reader = csv.DictReader(f)
@@ -220,11 +241,19 @@ def load_passwords_csv(file_path):
 
 
 def save_passwords_json(file_path, passwords):
+    """
+    Save passwords to a JSON file as a list of dictionaries.
+    """
     with open(file_path, 'w', encoding="utf-8") as f:
         json.dump(passwords, f, ensure_ascii=False, indent=4)
 
 
 def load_passwords_json(file_path):
+    """
+    Load passwords from a JSON file.
+
+    Returns a list of dictionaries. Returns an empty list if the file is empty or doesn't exist.
+    """
     if not os.path.exists(file_path) or os.path.getsize(file_path) == 0:
         return []
     with open(file_path, 'r', encoding="utf-8") as f:
@@ -232,6 +261,11 @@ def load_passwords_json(file_path):
 
 
 def save_passwords_docx(file_path, passwords):
+    """
+    Save passwords to a Word (.docx) document as a table.
+
+    Creates a table with columns: Service, Login / Email, Password.
+    """
     doc = Document()
     doc.add_heading("Saved Passwords", level=1)
 
@@ -252,6 +286,11 @@ def save_passwords_docx(file_path, passwords):
 
 
 def load_passwords_docx(file_path):
+    """
+    Load passwords from a Word (.docx) document.
+
+    Reads the first table in the document and converts it to a list of dictionaries.
+    """
     doc = Document(file_path)
     passwords = []
     table = doc.tables[0]
@@ -268,6 +307,12 @@ def load_passwords_docx(file_path):
 
 
 def save_passwords(file_path, passwords):
+    """
+    Search passwords by service name (case-insensitive).
+
+    Returns a filtered list of dictionaries.
+    Currently a placeholder for future implementation.
+    """
     ext = os.path.splitext(file_path)[1].lower()
     if ext == ".csv":
         return save_passwords_csv(file_path, passwords)
