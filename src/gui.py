@@ -188,6 +188,13 @@ def show_passwords(root):
 
 
 def delete_selected_password(tree, file_path, parent_window):
+    """
+    Delete the currently selected password from the table and the file.
+
+    - Prompts the user for confirmation before deletion
+    - Reloads the file, filters out the selected entry and saves the updated list
+    - Removes the row from the table
+    """
     selected = tree.selection()
     if not selected:
         messagebox.showwarning("No selection", "Please select a password to delete.", parent=parent_window)
@@ -199,22 +206,26 @@ def delete_selected_password(tree, file_path, parent_window):
 
     service, login, password = values
 
+    # Ask for confirmation
     if not messagebox.askyesno("Delete", f"Delete password for '{service}'?", parent=parent_window):
         return
 
+    # Reload passwords, filter out the selected one and save
     all_passwords = load_passwords(file_path)
-
     new_passwords = [
         p for p in all_passwords
         if not (p['service'] == service and p['login'] == login and p['password'] == password)
     ]
-
     save_passwords(file_path, new_passwords)
 
+    # Remove the row from the table
     tree.delete(selected[0])
 
 
 def save_password_file_path(path):
+    """
+    Save the path to the password file in settings.json.
+    """
     data = {}
     if os.path.exists(SETTINGS_FILE):
         try:
