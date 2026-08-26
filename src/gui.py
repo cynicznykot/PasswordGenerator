@@ -111,24 +111,31 @@ def check_for_updates():
 
 
 def save_dismiss_time():
-    # Time recording setting.json file
+    """Save the current time app version to settings.json."""
     now_time = datetime.now()
     save_time = now_time.strftime("%Y-%m-%d %H:%M:%S")
 
-    data = {"last_dismissed": save_time,
-            "app_version": APP_VERSION}
+    data = {"last_dismissed": save_time, "app_version": APP_VERSION}
 
     with open("settings.json", "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=4)
 
 
 def show_passwords(root):
+    """
+    Open a new window displaying all saved passwords.
+
+    - Prompts the user to select a file (if not remembered)
+    - Displays passwords in a table with search and delete functionality
+    """
     win = tk.Toplevel(root)
     win.title("Your Passwords")
     win.geometry("750x600")
 
+    # Try to load the previously used file path
     file_path = load_password_file_path()
 
+    # If the file no longer exists, ask the user to select a new one
     if file_path and not os.path.exists(file_path):
         file_path = None
 
@@ -139,15 +146,19 @@ def show_passwords(root):
         )
 
     if not file_path:
-        return
+        return  # User cancelled
+
+    # Save the selected path for future use
     save_password_file_path(file_path)
 
+    # Load passwords from the selected file
     all_passwords = load_passwords(file_path)
 
     if not all_passwords:
         tk.Label(win, text="No passwords found.", font=('Arial', 14)).pack(pady=20)
         return
 
+    # --- Search bar ---
     search_frame = ttk.Frame(win)
     search_frame.pack(fill='x', padx=10, pady=10)
 
@@ -156,6 +167,7 @@ def show_passwords(root):
     search_entry = ttk.Entry(search_frame, width=30)
     search_entry.pack(side='left', padx=5)
 
+    # --- Password table ---
     tree = ttk.Treeview(win, columns=("Service", "Login", "Password"), show="headings")
     tree.heading("Service", text="Service")
     tree.heading("Login", text="Login / Email")
@@ -166,6 +178,7 @@ def show_passwords(root):
 
     tree.pack(fill="both", expand=True, padx=10, pady=10)
 
+    # --- Action buttons ---
     btn_frame = ttk.Frame(win)
     btn_frame.pack(fill='x', padx=10, pady=10)
 
