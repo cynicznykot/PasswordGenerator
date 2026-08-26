@@ -18,7 +18,7 @@ import csv
 
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-PASSWORDS_FILE = os.path.join(BASE_DIR, "settings.json")
+PASSWORDS_FILE = os.path.join(BASE_DIR, "passwords.txt")
 SETTINGS_FILE = os.path.join(BASE_DIR, "settings.json")
 
 
