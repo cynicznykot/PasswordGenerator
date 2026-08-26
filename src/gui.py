@@ -243,6 +243,10 @@ def save_password_file_path(path):
 
 
 def load_password_file_path():
+    """
+    Load the saved password file path from settings.json.
+    Returns None if the file doesn't exist or is invalid.
+    """
     if os.path.exists(SETTINGS_FILE):
         try:
             with open(SETTINGS_FILE, "r", encoding="utf-8") as f:
