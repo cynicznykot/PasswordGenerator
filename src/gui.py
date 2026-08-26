@@ -262,25 +262,24 @@ def load_password_file_path():
 
 
 def main():
-    # Create a Window
+    """Initialize the main application window and run the Tkinter event loop."""
     root = tk.Tk()
     root.title("🔐 Personal Password Generator")
     root.geometry("700x700")
     root.after(1000, check_for_updates)
     root.focus_set()
 
-
-    # Setting Styles
+    # --- Styles ---
     style = ttk.Style()
     style.theme_use('clam')
-
     style.configure('TLabel', font=('Arial', 12))
     style.configure('TButton', font=('Arial', 12), padding=5)
 
-    # Main Frame
+    # --- Main frame ---
     main_frame = ttk.Frame(root, padding='20', borderwidth=0, relief='flat')
     main_frame.pack(fill='both', expand=True)
 
+    # --- View passwords button ---
     view_btn = tk.Button(
         main_frame,
         text="🔍 View Passwords",
@@ -293,11 +292,11 @@ def main():
     )
     view_btn.pack(pady=5)
 
-    # Headline
+    # --- Title ---
     title = ttk.Label(main_frame, text="🔐 Personal Password Generator", font=('Arial', 18, 'bold'))
     title.pack(pady=(0, 15))
 
-    # Create Variables
+    # --- Variables ---
     length_var = tk.IntVar(value=16)
     use_letters = tk.BooleanVar(value=True)
     use_digits = tk.BooleanVar(value=True)
@@ -305,11 +304,11 @@ def main():
     password_var = tk.StringVar(value="")
     service_var = tk.StringVar(value="")
     login_var = tk.StringVar(value="")
-    theme_var = tk.StringVar(value='light')  # Change theme in func toggle_theme()
+    theme_var = tk.StringVar(value='light')  # Current theme
 
-
+    # --- Mouse wheel handler ---
     def on_mouse_wheel(event):
-        # Change password length using the mouse wheel
+        """Adjust password length using the mouse wheel."""
         if event.widget in (entry_service, entry_email, entry_password):
             return
 
@@ -329,24 +328,22 @@ def main():
         if 16 <= new_value <= 64:
             length_var.set(new_value)
 
-
+    # --- Password generation ---
     def on_generate():
-        # Retrieving Values
+        """Generate a password based on user settings."""
         length = length_var.get()
         letters = use_letters.get()
         digits = use_digits.get()
         symbols = use_symbols.get()
 
-        # Type Checking
         if not (letters or digits or symbols):
             return password_var.set("⚠️ Select at least one character type.")
 
-        # Func Generated Password
         pool = build_character_pool(letters, digits, symbols)
         password = generate_password(length, pool)
         password_var.set(password)
 
-        # Password Strength Indicator
+        # Update strength indicator
         strength = check_strength(password)
         if strength == "Not Safe":
             strength_label.config(text="🔴 Not Safe!", fg='red')
@@ -355,9 +352,9 @@ def main():
         else:
             strength_label.config(text="🟢 Very Strong!", fg='green')
 
-
+    # --- Copy password to clipboard ---
     def copy_password():
-        # Copied Password
+        """Copy the generated password to clipboard."""
         password = password_var.get()
         if password:
             root.clipboard_clear()
@@ -365,9 +362,9 @@ def main():
             password_var.set("✅ Copied!")
             root.after(2000, lambda: password_var.set(password))
 
-
+    # --- Theme management ---
     def apply_theme(theme):
-        # Change user's light/dark theme
+        """Apply light or dark theme to the entire interface."""
         if theme == 'light':
             top_frame.config(bg='#f0f0f0')
             root.configure(bg='#f0f0f0')
@@ -416,7 +413,7 @@ def main():
 
 
     def toggle_theme():
-        # Func change theme
+        """Switch between light and dark themes."""
         theme_var.get()
         if theme_var.get() == "light":
             theme_var.set('dark')
@@ -428,22 +425,20 @@ def main():
             theme_toggle.config(text="🌙 Dark Theme")
 
 
+    # --- Save password to file ---
     def save_password():
-        # Save Password
+        """Save the generated password to a file selected by the user."""
         password = password_var.get()
         service = entry_service.get().strip()
         login = entry_email.get().strip()
 
         if not password:
             return password_var.set("⚠️ Generate a password!")
-
         if not service:
             return service_var.set("⚠️ Empty a service name!")
-
         if not login:
             return login_var.set("⚠️ Empty a login/email name!")
 
-        # File Selection Dialog
         file_path = filedialog.asksaveasfilename(
             title="Save password file",
             defaultextension=".txt",
@@ -468,7 +463,7 @@ def main():
         root.after(2000, lambda: password_var.set(password))
 
 
-    # ---- INTERFACE ELEMENTS ----
+    # ============================ INTERFACE ELEMENTS ===================================
 
     # Length mark
     ttk.Label(main_frame, text="Length Password:").pack(anchor='center')
