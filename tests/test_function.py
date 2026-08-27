@@ -5,7 +5,7 @@ Test script for the generator module.
 import os
 import csv
 import json
-from src.generator import save_passwords_csv, save_passwords_json
+from src.generator import save_passwords_csv, save_passwords_json, save_passwords_txt
 
 def test_save_passwords_csv():
     """Test save_passwords_csv function."""
@@ -54,7 +54,31 @@ def test_save_passwords_json():
     os.remove(file_path)
     print("🗑️  Test file removed.")
 
+def test_save_passwords_txt():
+    """Test save_passwords_txt function."""
+    test_passwords = [
+        {"service": "Google", "login": "user@gmail.com", "password": "P@ssw0rd!"},
+        {"service": "GitHub", "login": "username", "password": "Abc123!"}
+    ]
+
+    file_path = "text_passwords.txt"
+
+    save_passwords_txt(file_path, test_passwords), "File was not created!"
+
+    with open(file_path, "r", encoding="utf-8") as f:
+        lines = f.readlines()
+        assert len(lines) == 2, "Wrong number of lines!"
+
+        expected = "Service: Google | Login/email: user@gmail.com | Password: P@ssw0rd!\n"
+        assert lines[0] == expected, "Wrong content in first line!"
+
+    print("✅ All tests for txt format passed!")
+
+    os.remove(file_path)
+    print("🗑️ Test file removed.")
+
 if __name__ == "__main__":
     test_save_passwords_csv()
     test_save_passwords_json()
+    test_save_passwords_txt()
 
