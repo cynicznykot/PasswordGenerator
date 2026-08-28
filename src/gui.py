@@ -189,12 +189,12 @@ def show_passwords(root):
     export_btn = ttk.Button(
         btn_frame,
         text="📤 Export",
-        command=lambda: export_passwords(tree, file_path)
+        command=lambda: export_passwords(tree, file_path, win)
     )
     export_btn.pack(side='left', padx=5)
 
 
-def export_passwords(tree, file_path):
+def export_passwords(tree, file_path, parent_window):
     """Export the current table data to a file."""
     passwords = []
     for row in tree.get_children():
@@ -203,14 +203,14 @@ def export_passwords(tree, file_path):
             passwords.append({
                 "service": values[0],
                 "login": values[1],
-                "passwords": values[2]
+                "password": values[2]
             })
 
     if not passwords:
-        messagebox.showinfo("Export", "No data to export.")
+        messagebox.showinfo("Export", "No data to export.", parent=parent_window)
         return
 
-    export_path = filedialog.askopenfilename(
+    export_path = filedialog.asksaveasfilename(
         title="Export passwords",
         defaultextension=".csv",
         filetypes=[
@@ -218,7 +218,8 @@ def export_passwords(tree, file_path):
             ("JSON files", "*.json"),
             ("Text files", "*.txt"),
             ("Word files", "*.docx")
-        ]
+        ],
+        parent=parent_window
     )
 
     if not export_path:
@@ -226,8 +227,8 @@ def export_passwords(tree, file_path):
 
     save_passwords(export_path, passwords)
 
-    messagebox.showinfo("Export", f"✅ Exported to: {export_path}")
-    
+    messagebox.showinfo("Export", f"✅ Exported to: {export_path}", parent=parent_window)
+
 
 def delete_selected_password(tree, file_path, parent_window):
     """
