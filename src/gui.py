@@ -23,6 +23,8 @@ from datetime import datetime, timedelta
 from tkinter import ttk
 from tkinter import filedialog
 from tkinter import messagebox
+
+from generator import search_passwords
 from src.generator import build_character_pool, generate_password, check_strength, load_passwords, save_passwords
 from src.generator import SETTINGS_FILE
 from src.config import APP_VERSION, GITHUB_API_URL
@@ -137,6 +139,7 @@ def sort_treeview(tree, col, reverse):
 
     tree.heading(col, command=lambda: sort_treeview(tree, col, not reverse))
 
+
 def show_passwords(root):
     """
     Open a new window displaying all saved passwords.
@@ -182,6 +185,17 @@ def show_passwords(root):
 
     search_entry = ttk.Entry(search_frame, width=30)
     search_entry.pack(side='left', padx=5)
+
+    def filter_passwords():
+        query = search_entry.get().strip().lower()
+        for row in tree.get_children():
+            tree.delete(row)
+
+        filtered = [p for p in all_passwords if query in p["service"].lower()]
+        for p in filtered:
+            tree.insert("", "end", values=(p["service"], p["login"], p["password"]))
+
+    search_entry.bind("<KeyRelease>", lambda event: filter_passwords())
 
     sort_col = None
     sort_reverse = False
