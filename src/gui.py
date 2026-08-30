@@ -122,12 +122,18 @@ def save_dismiss_time():
 
 
 def sort_treeview(tree, col, reverse):
-    """Sort treeview by column."""
+    """Sort treeview by column and update header indicators."""
+    for c in ("Service", "Login", "Password"):
+        tree.heading(col, text=c)
+
     data = [(tree.set(child, col), child) for child in tree.get_children('')]
     data.sort(key=lambda item: item[0].lower(), reverse=reverse)
 
     for index, (_, child) in enumerate(data):
         tree.move(child, '', index)
+
+    arrow = " ▲" if not reverse else " ▼"
+    tree.heading(col, text=col + arrow)
 
     tree.heading(col, command=lambda: sort_treeview(tree, col, not reverse))
 
@@ -176,6 +182,9 @@ def show_passwords(root):
 
     search_entry = ttk.Entry(search_frame, width=30)
     search_entry.pack(side='left', padx=5)
+
+    sort_col = None
+    sort_reverse = False
 
     # --- Password table ---
     tree = ttk.Treeview(win, columns=("Service", "Login", "Password"), show="headings")
