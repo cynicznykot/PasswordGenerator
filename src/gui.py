@@ -121,6 +121,16 @@ def save_dismiss_time():
         json.dump(data, f, ensure_ascii=False, indent=4)
 
 
+def sort_treeview(tree, col, reverse):
+    """Sort treeview by column."""
+    data = [(tree.set(child, col), child) for child in tree.get_children('')]
+    data.sort(key=lambda: x[0].lower(), reverse=reverse)
+
+    for index, (_, child) in enumerate(data):
+        tree.move(child, '', index)
+
+    tree.headling(col, command=lambda: sort_treeview(tree, col, not reverse))
+
 def show_passwords(root):
     """
     Open a new window displaying all saved passwords.
@@ -172,6 +182,9 @@ def show_passwords(root):
     tree.heading("Service", text="Service")
     tree.heading("Login", text="Login / Email")
     tree.heading("Password", text="Password")
+
+    for col in ("Service", "Login", "Password"):
+        tree.heading(col, text=col, command=lambda c=col: sort_treeview(tree, c, False))
 
     for p in all_passwords:
         tree.insert("", "end", values=(p["service"], p["login"], p["password"]))
