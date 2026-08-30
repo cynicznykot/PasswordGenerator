@@ -124,12 +124,12 @@ def save_dismiss_time():
 def sort_treeview(tree, col, reverse):
     """Sort treeview by column."""
     data = [(tree.set(child, col), child) for child in tree.get_children('')]
-    data.sort(key=lambda: x[0].lower(), reverse=reverse)
+    data.sort(key=lambda item: item[0].lower(), reverse=reverse)
 
     for index, (_, child) in enumerate(data):
         tree.move(child, '', index)
 
-    tree.headling(col, command=lambda: sort_treeview(tree, col, not reverse))
+    tree.heading(col, command=lambda: sort_treeview(tree, col, not reverse))
 
 def show_passwords(root):
     """
