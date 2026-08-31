@@ -235,7 +235,7 @@ def show_passwords(root):
     copy_btn = ttk.Button(
         btn_frame,
         text="📋 Copy Password",
-        command=lambda: copy_selected_password(tree, win)
+        command=lambda: copy_selected_password(tree, win, root)
     )
     copy_btn.pack(side='left', padx=5)
 
@@ -364,7 +364,7 @@ def copy_password_from_table(event):
     tree.bild("<Double-1>", copy_password_from_table)
 
 
-def copy_selected_password(tree, parent_window):
+def copy_selected_password(tree, parent_window, root):
     selected = tree.selection()
     if not selected:
         messagebox.showwarning("No selection", "Please select a password to copy.", parent=parent_window)
