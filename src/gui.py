@@ -229,6 +229,16 @@ def show_passwords(root):
     )
     export_btn.pack(side='left', padx=5)
 
+    btn_frame = ttk.Frame(win)
+    btn_frame.pack(fill='x', padx=10, pady=10)
+
+    copy_btn = ttk.Button(
+        btn_frame,
+        text="📋 Copy Password",
+        command=lambda: copy_selected_password(tree, win)
+    )
+    copy_btn.pack(side='left', padx=5)
+
 
 def export_passwords(tree, file_path, parent_window):
     """Export the current table data to a file."""
@@ -410,12 +420,6 @@ def main():
     )
     import_btn.pack(pady=5)
 
-    copy_btn = ttk.Button(
-        btn_frame,
-        text="📋 Copy Password",
-        command=lambda: copy_selected_password(tree, win)
-    )
-    copy_btn.pack(side='left', padx=5)
 
     # --- Title ---
     title = ttk.Label(main_frame, text="🔐 Personal Password Generator", font=('Arial', 18, 'bold'))
