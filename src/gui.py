@@ -340,6 +340,33 @@ def load_password_file_path():
     return None
 
 
+def copy_password_from_table(event):
+    selected = tree.selection()
+    if not selected:
+        return
+
+    values = tree.item(selected[0], 'values')
+    if values:
+        root.clipboard_clear()
+        root.clipboard_append(values[2])
+        messagebox.showinfo("Copied", "Password copied to clipboard!", parent=win)
+
+    tree.bild("<Double-1>", copy_password_from_table)
+
+
+def copy_selected_password(tree, parent_window):
+    selected = tree.selection()
+    if not selected:
+        messagebox.showwarning("No selection", "Please select a password to copy.", parent=parent_window)
+        return
+
+    values = tree.item(selected[0], 'values')
+    if values:
+        root.clipboard_clear()
+        root.clipboard_append(values[2])
+        messagebox.showinfo("Copied", "Password copied to clipboard!", parent=parent_window)
+
+
 def main():
     """Initialize the main application window and run the Tkinter event loop."""
     root = tk.Tk()
@@ -382,6 +409,13 @@ def main():
         pady=5
     )
     import_btn.pack(pady=5)
+
+    copy_btn = ttk.Button(
+        btn_frame,
+        text="📋 Copy Password",
+        command=lambda: copy_selected_password(tree, win)
+    )
+    copy_btn.pack(side='left', padx=5)
 
     # --- Title ---
     title = ttk.Label(main_frame, text="🔐 Personal Password Generator", font=('Arial', 18, 'bold'))
