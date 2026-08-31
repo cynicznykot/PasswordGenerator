@@ -340,48 +340,6 @@ def load_password_file_path():
     return None
 
 
-def import_passwords(root):
-    """Import passwords from a file."""
-    file_path = filedialog.askopenfilename(
-        title="Import passwords",
-        filetypes=[
-            ("All supported", "*.txt *.csv *.json *.docx"),
-            ("Text files", "*.txt"),
-            ("CSV files", "*.csv"),
-            ("JSON files", "*.json"),
-            ("Word files", "*.docx")
-        ]
-    )
-
-    if not file_path:
-        return
-
-    imported = load_passwords(file_path)
-
-    if not imported:
-        messagebox.showinfo("Import", "No passwords found in file.")
-        return
-
-    answer = messagebox.askyesno(
-        "Import",
-        f"Found {len(imported)} passwords. \n\nDo you want to add them to your curent file?",
-        parent=root
-    )
-
-    if answer:
-        current_path = load_password_file_path()
-        if current_path and os.path.exists(current_path):
-            current_passwords = load_passwords(current_path)
-        else:
-            current_passwords = []
-
-        combined = current_passwords + imported
-        save_passwords(current_path or "passwords.txt", combined)
-        messagebox.showinfo("Import", f"✅ Added {len(imported)} passwords.")
-    else:
-        messagebox.showinfo("Import", "Import cancelled.")
-
-
 def main():
     """Initialize the main application window and run the Tkinter event loop."""
     root = tk.Tk()
@@ -416,7 +374,7 @@ def main():
     import_btn = tk.Button(
         main_frame,
         text="📥 Import Passwords",
-        command=import_passwords,
+        command=lambda: import_passwords(root),
         font=('Arial', 12),
         bg='#4CAF50',
         fg='white',
@@ -438,6 +396,48 @@ def main():
     service_var = tk.StringVar(value="")
     login_var = tk.StringVar(value="")
     theme_var = tk.StringVar(value='light')  # Current theme
+
+    def import_passwords(root):
+        """Import passwords from a file."""
+        file_path = filedialog.askopenfilename(
+            title="Import passwords",
+            filetypes=[
+                ("All supported", "*.txt *.csv *.json *.docx"),
+                ("Text files", "*.txt"),
+                ("CSV files", "*.csv"),
+                ("JSON files", "*.json"),
+                ("Word files", "*.docx")
+            ]
+        )
+
+        if not file_path:
+            return
+
+        imported = load_passwords(file_path)
+
+        if not imported:
+            messagebox.showinfo("Import", "No passwords found in file.")
+            return
+
+        answer = messagebox.askyesno(
+            "Import",
+            f"Found {len(imported)} passwords. \n\nDo you want to add them to your curent file?",
+            parent=root
+        )
+
+        if answer:
+            current_path = load_password_file_path()
+            if current_path and os.path.exists(current_path):
+                current_passwords = load_passwords(current_path)
+            else:
+                current_passwords = []
+
+            combined = current_passwords + imported
+            save_passwords(current_path or "passwords.txt", combined)
+            messagebox.showinfo("Import", f"✅ Added {len(imported)} passwords.")
+        else:
+            messagebox.showinfo("Import", "Import cancelled.")
+
 
     # --- Mouse wheel handler ---
     def on_mouse_wheel(event):
