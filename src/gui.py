@@ -140,7 +140,7 @@ def sort_treeview(tree, col, reverse):
     tree.heading(col, command=lambda: sort_treeview(tree, col, not reverse))
 
 
-def show_passwords(root):
+def show_passwords(root, theme):
     """
     Open a new window displaying all saved passwords.
 
@@ -150,6 +150,21 @@ def show_passwords(root):
     win = tk.Toplevel(root)
     win.title("Your Passwords")
     win.geometry("750x600")
+
+    style = ttk.Style()
+
+    if theme == 'light':
+        win.configure(bg='#f0f0f0')
+        style.configure('TLabel', background='#f0f0f0', foreground='black')
+        style.configure('TFrame', background='#f0f0f0')
+        style.configure('TButton', background='#f0f0f0', foreground='black')
+        style.configure('TEntry', fieldbackground='white', foreground='black')
+    else:
+        win.configure(bg='#1e1e1e')
+        style.configure('TLabel', background='#1e1e1e', foreground='white')
+        style.configure('TFrame', background='#1e1e1e')  
+        style.configure('TButton', background='#1e1e1e', foreground='white')
+        style.configure('TEntry', fieldbackground='#2d2d2d', foreground='white')
 
     # Try to load the previously used file path
     file_path = load_password_file_path()
@@ -399,7 +414,7 @@ def main():
     view_btn = tk.Button(
         main_frame,
         text="🔍 View Passwords",
-        command=lambda: show_passwords(root),
+        command=lambda: show_passwords(root, theme_var.get()),
         font=('Arial', 12),
         bg='#9C27B0',
         fg='white',
