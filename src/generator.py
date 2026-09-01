@@ -11,6 +11,10 @@ and it's used by both the CLI and the GUI versions of the application.
 import json
 from secrets import choice
 from docx import Document
+from reportlab.lib.pagesizes import A4, landscape
+from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph, Spacer
+from reportlab.lib import colors
+from reportlab.lib.styles import getSampleStyleSheet
 import string
 import time
 import os
@@ -305,6 +309,34 @@ def load_passwords_docx(file_path):
 
     return passwords
 
+def save_passwords_pdf(file_path, passwords):
+    """Save passwords to a PDF file as a table."""
+    doc = SimpleDocTemplate(file_path, pagesize=A4, title="Saved Passwords")
+
+    styles = getSampleStyleSheet()
+    title = Paragraph("Saved Passwords", styles['Title'])
+    spacer = Spacer(1, 12)
+
+    data = [["Service", "Login / Email", "Password"]]
+    for p in passwords:
+        data.append([p["service"], p["login"], p["password"]])
+
+    table = Table(data, colWidths=[150, 200, 150])
+    table.setStyle(TableStyle([
+        ('BACKGROUND', (0, 0), (-1, 0), colors.grey),
+        ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
+        ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+        ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+        ('FONTSIZE', (0, 0), (-1, 0), 12),
+        ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
+        ('BACKGROUND', (0, 1), (-1, -1), colors.beige),
+        ('GRID', (0, 0), (-1, -1), 1, colors.black),
+        ('FONTSIZE', (0, 1), (-1, -1), 10),
+
+    ]))
+
+    elements = [title, spacer, table]
+    doc.build(elements)
 
 def save_passwords(file_path, passwords):
     """
