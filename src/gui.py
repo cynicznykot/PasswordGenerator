@@ -162,7 +162,7 @@ def show_passwords(root, theme):
     else:
         win.configure(bg='#1e1e1e')
         style.configure('TLabel', background='#1e1e1e', foreground='white')
-        style.configure('TFrame', background='#1e1e1e')  
+        style.configure('TFrame', background='#1e1e1e')
         style.configure('TButton', background='#1e1e1e', foreground='white')
         style.configure('TEntry', fieldbackground='#2d2d2d', foreground='white')
 
@@ -201,16 +201,40 @@ def show_passwords(root, theme):
     search_entry = ttk.Entry(search_frame, width=30)
     search_entry.pack(side='left', padx=5)
 
+    ttk.Label(search_frame, text="Filter by strength:").pack(side='left', padx=5)
+
+    strength_var = tk.StringVar(value="All")
+    strength_combo = ttk.Combobox(
+        search_frame,
+        textvariable=strength_var,
+        values=["All", "Not Safe", "Moderate", "Very Strong"],
+        state="readonly",
+        width=12
+    )
+    strength_combo.pack(side='left', padx=5)
+
     def filter_passwords():
         query = search_entry.get().strip().lower()
+        strength_filter = strength_var.get()
+
         for row in tree.get_children():
             tree.delete(row)
 
-        filtered = [p for p in all_passwords if query in p["service"].lower()]
+        filtered = []
+        for p in all_passwords:
+            if query not in p["service"].lower():
+                continue
+            if strength_filter != "All":
+                strength = check_strength(p["password"])
+                if strength != strength_filter:
+                    continue
+            filtered.append(p)
+
         for p in filtered:
             tree.insert("", "end", values=(p["service"], p["login"], p["password"]))
 
     search_entry.bind("<KeyRelease>", lambda event: filter_passwords())
+    strength_combo.bind("<<ComboboxSelected>>", lambda event: filter_passwords())
 
     sort_col = None
     sort_reverse = False
