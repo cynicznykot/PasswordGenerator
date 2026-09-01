@@ -352,6 +352,8 @@ def save_passwords(file_path, passwords):
         return save_passwords_json(file_path, passwords)
     elif ext == ".docx":
         return save_passwords_docx(file_path, passwords)
+    elif ext == ".pdf":
+        return save_passwords_pdf(file_path, passwords)
     else:
         return save_passwords_txt(file_path, passwords)
 

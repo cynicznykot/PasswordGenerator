@@ -302,7 +302,8 @@ def export_passwords(tree, file_path, parent_window):
             ("CSV files", "*.csv"),
             ("JSON files", "*.json"),
             ("Text files", "*.txt"),
-            ("Word files", "*.docx")
+            ("Word files", "*.docx"),
+            ("PDF files", "*.pdf")
         ],
         parent=parent_window
     )
