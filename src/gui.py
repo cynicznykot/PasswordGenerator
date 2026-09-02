@@ -341,7 +341,7 @@ def edit_password(tree, file_path, parent_window):
 
     tk.Button(btn_frame, text="💾 Save", command=save_edit, bg='#4CAF50', fg='white',
                   padx=15, pady=5).pack(side='left', padx=5)
-    tk.Button(btn_frame, text="❌ Cancel", command=edit_win.destroy, bg='f44336',
+    tk.Button(btn_frame, text="❌ Cancel", command=edit_win.destroy, bg='#f44336',
                   fg='white', padx=15, pady=5).pack(side='left', padx=5)
 
     edit_win.update()
