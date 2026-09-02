@@ -295,7 +295,6 @@ def edit_password(tree, file_path, parent_window):
     edit_win.title("Edit Passwords")
     edit_win.geometry("400x300")
     edit_win.transient(parent_window)
-    edit_win.grab_set()
 
     tk.Label(edit_win, text="Service:").pack(pady=5)
     service_entry = tk.Entry(edit_win, width=40)
@@ -344,6 +343,9 @@ def edit_password(tree, file_path, parent_window):
                   padx=15, pady=5).pack(side='left', padx=5)
         tk.Button(btn_frame, text="❌ Cancel", command=edit_win.destroy, bg='f44336',
                   fg='white', padx=15, pady=5).pack(side='left', padx=5)
+
+        edit_win.update()
+        edit_win.grab_set()
 
 def export_passwords(tree, file_path, parent_window):
     """Export the current table data to a file."""
