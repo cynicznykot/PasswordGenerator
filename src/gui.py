@@ -312,6 +312,39 @@ def edit_password(tree, file_path, parent_window):
     service_entry.insert(0, old_password)
     service_entry.pack(pady=5)
 
+    def save_edit():
+        new_service = service_entry.get().strip()
+        new_login = service_entry.get().strip()
+        new_password = service_entry.get().strip()
+
+        if not new_service or not new_login or not new_password:
+            messagebox.showwarning("Error", "All fields are required.", parent=parent_window)
+            return
+
+        all_passwords = load_passwords(file_path)
+
+        for p in all_passwords:
+            if p["service"] == old_service and p["login"] == old_login and p["password"] == old_password:
+                p["service"] = new_service
+                p["login"] = new_login
+                p["password"] = new_password
+                break
+
+        save_passwords(file_path, all_passwords)
+
+        tree.item(selected[0], values=(new_service, new_login, new_password))
+
+        edit_win.destroy()
+        messagebox.showinfo("Success", "Password updated!", parent=parent_window)
+
+        btn_frame = tk.Frame(edit_win)
+        btn_frame.pack(pady=10)
+
+        tk.Button(btn_frame, text="💾 Save", command=save_edit, bg='#4CAF50', fg='white',
+                  padx=15, pady=5).pack(side='left', padx=5)
+        tk.Button(btn_frame, text="❌ Cancel", command=edit_win.destroy, bg='f44336',
+                  fg='white', padx=15, pady=5).pack(side='left', padx=5)
+
 def export_passwords(tree, file_path, parent_window):
     """Export the current table data to a file."""
     passwords = []
