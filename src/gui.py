@@ -289,6 +289,29 @@ def edit_password(tree, file_path, parent_window):
     if not values:
         return
 
+    old_service, old_login, old_password = values
+
+    edit_win = tk.Toplevel(parent_window)
+    edit_win.title("Edit Passwords")
+    edit_win.geometry("400x300")
+    edit_win.transient(parent_window)
+    edit_win.grab_set()
+
+    tk.Label(edit_win, text="Service:").pack(pady=5)
+    service_entry = tk.Entry(edit_win, width=40)
+    service_entry.insert(0, old_service)
+    service_entry.pack(pady=5)
+
+    tk.Label(edit_win, text="Login / Email:").pack(pady=5)
+    service_entry = tk.Entry(edit_win, width=40)
+    service_entry.insert(0, old_login)
+    service_entry.pack(pady=5)
+
+    tk.Label(edit_win, text="Password:").pack(pady=5)
+    service_entry = tk.Entry(edit_win, width=40)
+    service_entry.insert(0, old_password)
+    service_entry.pack(pady=5)
+
 def export_passwords(tree, file_path, parent_window):
     """Export the current table data to a file."""
     passwords = []
