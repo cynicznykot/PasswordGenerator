@@ -253,6 +253,8 @@ def show_passwords(root, theme):
 
     tree.pack(fill="both", expand=True, padx=10, pady=10)
 
+    tree.bind("<Double-1>", lambda event: edit_password(tree, file_path, win))
+
     # --- Action buttons ---
     btn_frame = ttk.Frame(win)
     btn_frame.pack(fill='x', padx=10, pady=10)
@@ -278,6 +280,14 @@ def show_passwords(root, theme):
     )
     copy_btn.pack(side='left', padx=5)
 
+def edit_password(tree, file_path, parent_window):
+    selected = tree.selection()
+    if not selected:
+        return
+
+    values = tree.item(selected[0], 'values')
+    if not values:
+        return
 
 def export_passwords(tree, file_path, parent_window):
     """Export the current table data to a file."""
