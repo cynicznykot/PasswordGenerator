@@ -302,19 +302,19 @@ def edit_password(tree, file_path, parent_window):
     service_entry.pack(pady=5)
 
     tk.Label(edit_win, text="Login / Email:").pack(pady=5)
-    service_entry = tk.Entry(edit_win, width=40)
-    service_entry.insert(0, old_login)
-    service_entry.pack(pady=5)
+    login_entry = tk.Entry(edit_win, width=40)
+    login_entry.insert(0, old_login)
+    login_entry.pack(pady=5)
 
     tk.Label(edit_win, text="Password:").pack(pady=5)
-    service_entry = tk.Entry(edit_win, width=40)
-    service_entry.insert(0, old_password)
-    service_entry.pack(pady=5)
+    password_entry = tk.Entry(edit_win, width=40)
+    password_entry.insert(0, old_password)
+    password_entry.pack(pady=5)
 
     def save_edit():
         new_service = service_entry.get().strip()
-        new_login = service_entry.get().strip()
-        new_password = service_entry.get().strip()
+        new_login = login_entry.get().strip()
+        new_password = password_entry.get().strip()
 
         if not new_service or not new_login or not new_password:
             messagebox.showwarning("Error", "All fields are required.", parent=parent_window)
@@ -336,16 +336,16 @@ def edit_password(tree, file_path, parent_window):
         edit_win.destroy()
         messagebox.showinfo("Success", "Password updated!", parent=parent_window)
 
-        btn_frame = tk.Frame(edit_win)
-        btn_frame.pack(pady=10)
+    btn_frame = tk.Frame(edit_win)
+    btn_frame.pack(pady=10)
 
-        tk.Button(btn_frame, text="💾 Save", command=save_edit, bg='#4CAF50', fg='white',
+    tk.Button(btn_frame, text="💾 Save", command=save_edit, bg='#4CAF50', fg='white',
                   padx=15, pady=5).pack(side='left', padx=5)
-        tk.Button(btn_frame, text="❌ Cancel", command=edit_win.destroy, bg='f44336',
+    tk.Button(btn_frame, text="❌ Cancel", command=edit_win.destroy, bg='f44336',
                   fg='white', padx=15, pady=5).pack(side='left', padx=5)
 
-        edit_win.update()
-        edit_win.grab_set()
+    edit_win.update()
+    edit_win.grab_set()
 
 def export_passwords(tree, file_path, parent_window):
     """Export the current table data to a file."""
