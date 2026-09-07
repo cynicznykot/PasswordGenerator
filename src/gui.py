@@ -364,7 +364,6 @@ def export_passwords(tree, file_path, parent_window):
 
     export_path = filedialog.asksaveasfilename(
         title="Export passwords",
-        # defaultextension=".csv",
         filetypes=[
             ("PDF files", "*.pdf"),
             ("CSV files", "*.csv"),
