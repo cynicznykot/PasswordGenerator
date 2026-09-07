@@ -7,7 +7,7 @@ This module contains all configurable constants and settings used across the app
 """
 
 # App version. Update this with every new release.
-APP_VERSION = "v1.0.2"
+APP_VERSION = "v1.1.0"
 
 # Link to check for new updates (GitHub API)
 GITHUB_API_URL = "https://api.github.com/repos/cynicznykot/PasswordGenerator/releases/latest"
