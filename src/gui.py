@@ -45,11 +45,9 @@ def safe_read_settings():
     return {}
 
 
-def safe_write_settings():
+def safe_write_settings(data):
     """
     Safely write settings to settings.json using a temporary file.
-
-    Uses an atomic move operation to prevent file corruption on Windows.
     """
     try:
         # Create a temporary file in the current directory
@@ -74,7 +72,7 @@ def check_for_updates():
 
     # Check if the user has dismissed the notification within the last 24 hours
     if data.get("app_version") != APP_VERSION:
-        safe_write_settings()
+        safe_write_settings({"app_version": APP_VERSION})
         return
 
     last_dismissed = data.get("last_dismissed")
@@ -235,9 +233,6 @@ def show_passwords(root, theme):
     search_entry.bind("<KeyRelease>", lambda event: filter_passwords())
     strength_combo.bind("<<ComboboxSelected>>", lambda event: filter_passwords())
 
-    sort_col = None
-    sort_reverse = False
-
     # --- Password table ---
     tree = ttk.Treeview(win, columns=("Service", "Login", "Password"), show="headings")
     tree.heading("Service", text="Service")
@@ -278,6 +273,7 @@ def show_passwords(root, theme):
         command=lambda: copy_selected_password(tree, win, root)
     )
     copy_btn.pack(side='left', padx=5)
+
 
 def edit_password(tree, file_path, parent_window):
     selected = tree.selection()
@@ -345,6 +341,7 @@ def edit_password(tree, file_path, parent_window):
 
     edit_win.update()
     edit_win.grab_set()
+
 
 def export_passwords(tree, file_path, parent_window):
     """Export the current table data to a file."""
@@ -454,20 +451,6 @@ def load_password_file_path():
         except (json.JSONDecodeError, ValueError):
             return None
     return None
-
-
-def copy_password_from_table(event):
-    selected = tree.selection()
-    if not selected:
-        return
-
-    values = tree.item(selected[0], 'values')
-    if values:
-        root.clipboard_clear()
-        root.clipboard_append(values[2])
-        messagebox.showinfo("Copied", "Password copied to clipboard!", parent=win)
-
-    tree.bild("<Double-1>", copy_password_from_table)
 
 
 def copy_selected_password(tree, parent_window, root):
@@ -582,7 +565,6 @@ def main():
         else:
             messagebox.showinfo("Import", "Import cancelled.")
 
-
     # --- Mouse wheel handler ---
     def on_mouse_wheel(event):
         """Adjust password length using the mouse wheel."""
@@ -688,7 +670,6 @@ def main():
 
             main_frame.configure(style="TFrame")
 
-
     def toggle_theme():
         """Switch between light and dark themes."""
         theme_var.get()
@@ -700,7 +681,6 @@ def main():
             theme_var.set('light')
             apply_theme('light')
             theme_toggle.config(text="🌙 Dark Theme")
-
 
     # --- Save password to file ---
     def save_password():
@@ -738,7 +718,6 @@ def main():
         service_var.set("")
         login_var.set("")
         root.after(2000, lambda: password_var.set(password))
-
 
     # ============================ INTERFACE ELEMENTS ===================================
 
