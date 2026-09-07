@@ -24,7 +24,6 @@ from tkinter import ttk
 from tkinter import filedialog
 from tkinter import messagebox
 
-from generator import search_passwords
 from src.generator import build_character_pool, generate_password, check_strength, load_passwords, save_passwords
 from src.generator import SETTINGS_FILE
 from src.config import APP_VERSION, GITHUB_API_URL
@@ -365,13 +364,13 @@ def export_passwords(tree, file_path, parent_window):
 
     export_path = filedialog.asksaveasfilename(
         title="Export passwords",
-        defaultextension=".csv",
+        # defaultextension=".csv",
         filetypes=[
+            ("PDF files", "*.pdf"),
             ("CSV files", "*.csv"),
             ("JSON files", "*.json"),
             ("Text files", "*.txt"),
             ("Word files", "*.docx"),
-            ("PDF files", "*.pdf")
         ],
         parent=parent_window
     )
