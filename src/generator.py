@@ -174,10 +174,12 @@ def save_passwords_txt(file_path, passwords):
     Save passwords to a .txt file in the format:
     Service: ... | Login/email: ... | Password: ...
     """
-
-    with open(file_path, "w", encoding="utf-8") as f:
-        for p in passwords:
-            f.write(f"Service: {p['service']} | Login/email: {p['login']} | Password: {p['password']}\n")
+    try:
+        with open(file_path, "w", encoding="utf-8") as f:
+            for p in passwords:
+                f.write(f"Service: {p['service']} | Login/email: {p['login']} | Password: {p['password']}\n")
+    except Exception as e:
+        print(f"Error saving to {file_path}: {e}")
 
 
 def load_passwords_txt(file_path=PASSWORDS_FILE):
@@ -267,9 +269,10 @@ def load_passwords_json(file_path):
 def save_passwords_docx(file_path, passwords):
     """
     Save passwords to a Word (.docx) document as a table.
-
-    Creates a table with columns: Service, Login / Email, Password.
     """
+    if not passwords:
+        return
+
     doc = Document()
     doc.add_heading("Saved Passwords", level=1)
 
@@ -309,6 +312,7 @@ def load_passwords_docx(file_path):
 
     return passwords
 
+
 def save_passwords_pdf(file_path, passwords):
     """Save passwords to a PDF file as a table."""
     doc = SimpleDocTemplate(file_path, pagesize=A4, title="Saved Passwords")
@@ -338,14 +342,18 @@ def save_passwords_pdf(file_path, passwords):
     elements = [title, spacer, table]
     doc.build(elements)
 
+
 def save_passwords(file_path, passwords):
     """
-    Search passwords by service name (case-insensitive).
+    Save passwords to a file based on its extension.
 
-    Returns a filtered list of dictionaries.
-    Currently a placeholder for future implementation.
+    Supported formats: .txt, .csv, .json, .docx, .pdf.
     """
+    if not passwords:
+        return
+
     ext = os.path.splitext(file_path)[1].lower()
+
     if ext == ".csv":
         return save_passwords_csv(file_path, passwords)
     elif ext == ".json":
