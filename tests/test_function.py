@@ -5,7 +5,17 @@ Test script for the generator module.
 import os
 import csv
 import json
+import tempfile
 from src.generator import save_passwords_csv, save_passwords_json, save_passwords_txt
+
+
+def get_test_passwords():
+    """Return a lisr of test passwords."""
+    return [
+        {"service": "Google", "login": "user@gmail.com", "password": "P@ssw0rd!"},
+        {"service": "GitHub", "login": "username", "password": "Abc123!"}
+    ]
+
 
 def test_save_passwords_csv():
     """Test save_passwords_csv function."""
@@ -31,6 +41,7 @@ def test_save_passwords_csv():
     os.remove(file_path)
     print("🗑️ Test file removed.")
 
+
 def test_save_passwords_json():
     """Test save_passwords_json function."""
     test_passwords = [
@@ -54,6 +65,7 @@ def test_save_passwords_json():
     os.remove(file_path)
     print("🗑️  Test file removed.")
 
+
 def test_save_passwords_txt():
     """Test save_passwords_txt function."""
     test_passwords = [
@@ -76,6 +88,7 @@ def test_save_passwords_txt():
 
     os.remove(file_path)
     print("🗑️ Test file removed.")
+
 
 if __name__ == "__main__":
     test_save_passwords_csv()
