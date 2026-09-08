@@ -153,8 +153,8 @@ def test_empty_passwords_txt():
 
         assert os.path.exists(file_path), "File was not created!"
 
-        with open(file_path, "f", encoding="utf-8") as f:
-            content = f.read(f)
+        with open(file_path, "r", encoding="utf-8") as f:
+            content = f.read()
             assert content == "", "File should be empty!"
 
         print("✅ Empty TXT test passed!")
