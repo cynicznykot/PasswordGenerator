@@ -5,7 +5,6 @@ Test script for the generator module.
 import os
 import csv
 import json
-import tempfile
 from src.generator import save_passwords_csv, save_passwords_json, save_passwords_txt
 
 
@@ -121,9 +120,59 @@ def test_empty_passwords_csv():
             print("🗑️ Tests file removed.")
 
 
+def test_empty_passwords_json():
+    """Test save_passwords_json with empty list."""
+    file_path = "test_empty.json"
+
+    try:
+        save_passwords_json(file_path, [])
+
+        assert os.path.exists(file_path), "File was not created!"
+
+        with open(file_path, "r", encoding="utf-8") as f:
+            rows = json.load(f)
+            assert len(rows) == 0, "File should be empty!"
+
+        print("✅ Empty JSON test passed!")
+
+    except Exception as e:
+        print(f"❌ Test failed: {e}")
+        raise
+    finally:
+        if os.path.exists(file_path):
+            os.remove(file_path)
+            print("🗑️ Test file removed.")
+
+
+def test_empty_passwords_txt():
+    """Test save_passwords_txt with empty list."""
+    file_path = "test_empty.txt"
+
+    try:
+        save_passwords_txt(file_path, [])
+
+        assert os.path.exists(file_path), "File was not created!"
+
+        with open(file_path, "f", encoding="utf-8") as f:
+            content = f.read(f)
+            assert content == "", "File should be empty!"
+
+        print("✅ Empty TXT test passed!")
+
+    except Exception as e:
+        print(f"❌ Test failed: {e}")
+        raise
+    finally:
+        if os.path.exists(file_path):
+            os.remove(file_path)
+            print("🗑️ Test file removed.")
+
+
 if __name__ == "__main__":
     test_save_passwords_csv()
     test_save_passwords_json()
     test_save_passwords_txt()
     test_empty_passwords_csv()
+    test_empty_passwords_json()
+    test_empty_passwords_txt()
 
