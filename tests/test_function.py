@@ -96,8 +96,34 @@ def test_save_passwords_txt():
             print("🗑️ Test file removed.")
 
 
+def test_empty_passwords_csv():
+    """Test save_passwords_csv with empty list."""
+    file_path = "test_empty.csv"
+
+    try:
+        save_passwords_csv(file_path, [])
+
+        assert os.path.exists(file_path), "File was not created!"
+
+        with open(file_path, "r", encoding="utf-8") as f:
+            reader = csv.DictReader(f)
+            rows = list(reader)
+            assert len(rows) == 0, "File should be empty!"
+
+        print("✅ Empty CSV test passed!")
+
+    except Exception as e:
+        print(f"❌ Test failed: {e}")
+        raise
+    finally:
+        if os.path.exists(file_path):
+            os.remove(file_path)
+            print("🗑️ Tests file removed.")
+
+
 if __name__ == "__main__":
     test_save_passwords_csv()
     test_save_passwords_json()
     test_save_passwords_txt()
+    test_empty_passwords_csv()
 
