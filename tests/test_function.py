@@ -9,11 +9,18 @@ from src.generator import save_passwords_csv, save_passwords_json, save_password
 
 
 def get_test_passwords():
-    """Return a lisr of test passwords."""
+    """Return a list of test passwords."""
     return [
         {"service": "Google", "login": "user@gmail.com", "password": "P@ssw0rd!"},
         {"service": "GitHub", "login": "username", "password": "Abc123!"}
     ]
+
+
+def clean_up(file_path):
+    """Remove test file if it exists."""
+    if os.path.exists(file_path):
+        os.remove(file_path)
+        print(f"🗑️ Test file removed: {file_path}")
 
 
 def test_save_passwords_csv():
@@ -38,9 +45,7 @@ def test_save_passwords_csv():
         print(f"❌ Test failed: {e}")
         raise
     finally:
-        if os.path.exists(file_path):
-            os.remove(file_path)
-            print("🗑️ Test file removed.")
+        clean_up(file_path)
 
 
 def test_save_passwords_json():
@@ -64,9 +69,7 @@ def test_save_passwords_json():
         print(f"❌ Test failed:{e}")
         raise
     finally:
-        if os.path.exists(file_path):
-            os.remove(file_path)
-            print("🗑️ Test file removed.")
+        clean_up(file_path)
 
 
 def test_save_passwords_txt():
@@ -90,9 +93,7 @@ def test_save_passwords_txt():
         print(f"❌ Test failed: {e}")
         raise
     finally:
-        if os.remove(file_path):
-            os.remove(file_path)
-            print("🗑️ Test file removed.")
+        clean_up(file_path)
 
 
 def test_empty_passwords_csv():
@@ -115,9 +116,7 @@ def test_empty_passwords_csv():
         print(f"❌ Test failed: {e}")
         raise
     finally:
-        if os.path.exists(file_path):
-            os.remove(file_path)
-            print("🗑️ Tests file removed.")
+        clean_up(file_path)
 
 
 def test_empty_passwords_json():
@@ -139,9 +138,7 @@ def test_empty_passwords_json():
         print(f"❌ Test failed: {e}")
         raise
     finally:
-        if os.path.exists(file_path):
-            os.remove(file_path)
-            print("🗑️ Test file removed.")
+        clean_up(file_path)
 
 
 def test_empty_passwords_txt():
@@ -163,9 +160,7 @@ def test_empty_passwords_txt():
         print(f"❌ Test failed: {e}")
         raise
     finally:
-        if os.path.exists(file_path):
-            os.remove(file_path)
-            print("🗑️ Test file removed.")
+        clean_up(file_path)
 
 
 if __name__ == "__main__":
