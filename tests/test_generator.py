@@ -166,6 +166,29 @@ class TestCheckStrength(unittest.TestCase):
         self.assertEqual(result, "Very Strong")
 
 
+class TestSaveAndLoadPassword(unittest.TestCase):
+    """Test suite for save/load passwords in different formats."""
+
+    def setUp(self):
+        """Prepare test data."""
+        self.test_passwords = [
+            {"service": "Google", "login": "user@gmail.com", "password": "P@ssw0rd!"},
+            {"service": "GitHub", "login": "username", "password": "Abc123!"}
+        ]
+
+    def test_save_and_load(self):
+        """Should save and load passwords from .txt file."""
+        file_path = "test_generator.txt"
+        try:
+            save_passwords_txt(file_path, self.test_passwords)
+            loaded = load_passwords_txt(file_path)
+            self.assertEqual(len(loaded), 2)
+            self.assertEqual(loaded[0]["service"], "Google")
+        finally:
+            if os.path.exists(file_path):
+                os.remove(file_path)
+
+                
 if __name__ == "__main__":
     import pytest
     pytest.main([__file__, "-v"])
