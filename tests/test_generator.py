@@ -273,11 +273,11 @@ class TestSearchPasswords(unittest.TestCase):
 
     def test_search_case_insensitive(self):
         """Should search without case sensitivity."""
-        password = [
+        passwords = [
             {"service": "Google", "login": "a", "password": "x"},
         ]
         result = search_passwords(passwords, "google")
-        self.assertEqual(leb(result), 1)
+        self.assertEqual(len(result), 1)
 
     def test_search_no_match(self):
         """Should return empty list if no match."""
