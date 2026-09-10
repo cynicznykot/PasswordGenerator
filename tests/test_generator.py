@@ -188,7 +188,18 @@ class TestSaveAndLoadPassword(unittest.TestCase):
             if os.path.exists(file_path):
                 os.remove(file_path)
 
-                
+    def test_save_and_load_csv(self):
+        """Should save and load passwords from .csv file."""
+        file_path = "test_generator.csv"
+        try:
+            save_passwords_csv(file_path, self.test_passwords)
+            loaded = load_passwords_csv(file_path)
+            self.assertEqual(len(loaded), 2)
+            self.assertEqual(loaded[0]["service"], "Google")
+        finally:
+            if os.path.exists(file_path):
+                os.remove(file_path)
+
 if __name__ == "__main__":
     import pytest
     pytest.main([__file__, "-v"])
