@@ -247,6 +247,36 @@ class TestSaveAndLoadPassword(unittest.TestCase):
                 os.remove(file_path)
 
 
+class TestSearchPasswords(unittest.TestCase):
+    """Test suite for search_passwords function."""
+
+    def test_search_existing(self):
+        """Should find passwords by service name."""
+        passwords = [
+            {"service": "Google", "login": "a", "password": "x"},
+            {"service": "GitHub", "login": "b", "password": "y"}
+        ]
+        result = search_passwords(passwords, "Google")
+        self.assertEqual(len(result), 1)
+        self.assertEqual(result[0]["service"], "Google")
+
+    def test_search_case_insensitive(self):
+        """Should search without case sensitivity."""
+        password = [
+            {"service": "Google", "login": "a", "password": "x"},
+        ]
+        result = search_passwords(passwords, "google")
+        self.assertEqual(leb(result), 1)
+
+    def test_search_no_match(self):
+        """Should return empty list if no match."""
+        passwords = [
+            {"service": "Google", "login": "a", "password": "x"},
+        ]
+        result = search_passwords(passwords, "Facebook")
+        self.assertEqual(len(result), 0)
+
+
 if __name__ == "__main__":
     import pytest
     pytest.main([__file__, "-v"])
