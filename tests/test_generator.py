@@ -200,6 +200,32 @@ class TestSaveAndLoadPassword(unittest.TestCase):
             if os.path.exists(file_path):
                 os.remove(file_path)
 
+    def test_save_and_load_json(self):
+        """Should save and load passwords from .json file."""
+        file_path = "test_passwords.json"
+        try:
+            save_passwords_json(file_path, self.test_passwords)
+            loaded = load_passwords_json(file_path)
+            self.assertEqual(len(loaded), 2)
+            self.assertEqual(loaded[0]["service"], "Google")
+        finally:
+            if os.path.exists(file_path):
+                os.remove(file_path)
+
+    def test_save_and_load_docx(self):
+        """Should save and load from .docx file."""
+        file_path = "test_passwords.docx"
+        try:
+            save_passwords_docx(file_path, self.test_passwords)
+            loaded = load_passwords_docx(file_path)
+            self.assertEqual(len(loaded), 2)
+            self.assertEqual(loaded[0]["service"], "Google")
+        finally:
+            if os.path.exists(file_path):
+                os.remove(file_path)
+
+                
+
 if __name__ == "__main__":
     import pytest
     pytest.main([__file__, "-v"])
