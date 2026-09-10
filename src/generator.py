@@ -378,6 +378,14 @@ def load_passwords(file_path):
         return load_passwords_txt(file_path)
 
 
+def search_passwords(passwords, query):
+    """
+    Search passwords by service name (case-insensitive).
+
+    Returns a filtered list of dictionaries.
+    """
+    return [p for p in passwords if query.lower() in p["service"].lower()]
+
 # ============================================================================================
 # 3. MAIN FUNC
 # ============================================================================================
