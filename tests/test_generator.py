@@ -176,7 +176,7 @@ class TestSaveAndLoadPassword(unittest.TestCase):
             {"service": "GitHub", "login": "username", "password": "Abc123!"}
         ]
 
-    def test_save_and_load(self):
+    def test_save_and_load_txt(self):
         """Should save and load passwords from .txt file."""
         file_path = "test_generator.txt"
         try:
