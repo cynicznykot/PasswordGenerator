@@ -224,7 +224,28 @@ class TestSaveAndLoadPassword(unittest.TestCase):
             if os.path.exists(file_path):
                 os.remove(file_path)
 
-                
+    def test_save_passwords_universal(self):
+        """Should auto-detect format by extension."""
+        file_path = "test_passwords.json"
+        try:
+            save_passwords(file_path, self.test_passwords)
+            loaded = load_passwords(file_path)
+            self.assertEqual(len(loaded), 2)
+        finally:
+            if os.path.exists(file_path):
+                os.remove(file_path)
+
+    def test_empty_passwords_csv(self):
+        """Should create empty CSV file for empty list."""
+        file_path = "test_empty.csv"
+        try:
+            save_passwords_csv(file_path, [])
+            loaded = load_passwords_csv(file_path)
+            self.assertEqual(len(loaded), 0)
+        finally:
+            if os.path.exists(file_path):
+                os.remove(file_path)
+
 
 if __name__ == "__main__":
     import pytest
