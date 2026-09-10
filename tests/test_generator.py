@@ -21,7 +21,8 @@ from src.generator import (
     save_passwords_docx,
     load_passwords_docx,
     save_passwords,
-    load_passwords
+    load_passwords,
+    search_passwords
 )
 
 
