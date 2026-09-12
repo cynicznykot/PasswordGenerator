@@ -6,7 +6,7 @@
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Tests](https://img.shields.io/badge/Tests-pytest-brightgreen.svg)](tests/)
 [![Platform](https://img.shields.io/badge/Platform-Linux%20%7C%20Windows%20%7C%20macOS-lightgrey.svg)]()
-[![Version](https://img.shields.io/badge/Version-v1.0.2-blue.svg)](https://github.com/cynicznykot/PasswordGenerator/releases)
+[![Version](https://img.shields.io/badge/Version-v1.1.0-blue.svg)](https://github.com/cynicznykot/PasswordGenerator/releases)
 [![Last Release](https://img.shields.io/badge/Release-July%202026-brightgreen.svg)](https://github.com/cynicznykot/PasswordGenerator/releases)
 
 ---
@@ -49,16 +49,24 @@ This project was created to practice:
 
 ## ✨ Features
 
-- 🖥️ **Graphical Interface** — intuitive window built with `tkinter`
-- 🔐 **Secure Generation** — uses the `secrets` module (cryptographically secure)
-- 📏 **Adjustable Length** — from 16 to 64 characters
-- 🔤 **Character Selection** — letters, digits, special symbols
-- 📊 **Strength Indicator** — `Not Safe` / `Moderate` / `Very Strong`
-- 📋 **Copy to Clipboard** — one-click copy with visual confirmation
-- 💾 **Save to File** — password + service name + login/email
-- 📁 **Custom Save Location** — user chooses folder and file name
-- ✅ **Tests** — 25 unit tests with `pytest`
-- 🖥️ **Cross-platform** — works on Windows, Linux, and macOS
+| Feature | Description |
+|---------|-------------|
+| 🖥️ **Graphical Interface** | Intuitive window built with `tkinter` |
+| 🔐 **Secure Generation** | Uses the `secrets` module (cryptographically secure) |
+| 📏 **Adjustable Length** | From 16 to 64 characters |
+| 🔤 **Character Selection** | Letters, digits, special symbols |
+| 📊 **Strength Indicator** | `Not Safe` / `Moderate` / `Very Strong` |
+| 📋 **Copy to Clipboard** | One-click copy with visual confirmation |
+| 💾 **Save to File** | Password + service name + login/email |
+| 📁 **Custom Save Location** | User chooses folder and file name |
+| 📋 **Password Viewer** | Table with search, sort, and filter |
+| ✏️ **Edit Entries** | Double-click to edit |
+| 🗑️ **Delete Entries** | With confirmation |
+| 📤 **Export** | To `.txt`, `.csv`, `.json`, `.docx`, `.pdf` |
+| 📥 **Import** | From `.txt`, `.csv`, `.json`, `.docx` |
+| 🌓 **Light / Dark Theme** | Toggle in the main window |
+| ✅ **Tests** | 25+ unit tests with `pytest` |
+| 🖥️ **Cross-platform** | Works on Windows, Linux, and macOS |
 
 ---
 
@@ -270,22 +278,30 @@ Skipped: GUI tests are slow, skipping for now
 - **Python 3.8+** — programming language
 - **Tkinter** — graphical interface
 - **Secrets** — cryptographic security
+- **python-docx** - Word export
+- **reportlab** - PDF export
 - **Unittest / Pytest** — testing
 - **Git** — version control
 
 ## 🗺️ Roadmap
 
-- [x] ✅ **Automatic update checker** — the program checks for a new version at startup.
-- [x] ✅ **Improved interface** — updated design with `ttk` and cleaner layout.
-- [x] ✅ **Build for Windows and Linux** — ready-to-download executable files.
-- [x] ✅ **Light / Dark theme toggle** — switch between light and dark interface modes.
-- [x] ✅ **"Don't remind me about update" button** — dismiss update notifications for 24 hours.
-- [ ] ⏳ **Saved passwords viewer** — a list of all entries with search, sorting, and filtering.
-- [ ] ⏳ **Search by service name** — quick password lookup by service name.
-- [ ] ⏳ **Import and export of passwords** — support for `.docx` (Word), `.csv` (Excel/Google Sheets), and `.json` (for data transfer).
-- [ ] ⏳ **File encryption for stored passwords** — protect user data.
-- [ ] ⏳ **Master password feature** — secure access to the program with a single master password.
-- [ ] ⏳ **Build for macOS** — support for all major platforms.
+### ✅ Already Implemented
+
+- [x] ✅ **Automatic update checker**
+- [x] ✅ **Improved GUI interface**
+- [x] ✅ **Build for Windows and Linux**
+- [x] ✅ **Light / Dark theme toggle**
+- [x] ✅ **"Don't remind me" button (24 hours)**
+- [x] ✅ **Saved passwords viewer**
+- [x] ✅ **Search, sort, and filter**
+- [x] ✅ **Import and export** — .txt, .csv, .json, .docx, .pdf
+- [x] ✅ **Edit and delete entries**
+
+### 🚀 Upcoming
+
+- [] ⏳ **File encryption for stored passwords**
+- [] ⏳ **Master password feature**
+- [] ⏳ **Build for macOS**
 
 ## 🤝 How to Contribute
 
