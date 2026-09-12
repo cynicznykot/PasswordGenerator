@@ -6,7 +6,7 @@
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Tests](https://img.shields.io/badge/Tests-pytest-brightgreen.svg)](tests/)
 [![Platform](https://img.shields.io/badge/Platform-Linux%20%7C%20Windows%20%7C%20macOS-lightgrey.svg)]()
-[![Version](https://img.shields.io/badge/Version-v1.0.2-blue.svg)](https://github.com/cynicznykot/PasswordGenerator/releases)
+[![Version](https://img.shields.io/badge/Version-v1.1.0-blue.svg)](https://github.com/cynicznykot/PasswordGenerator/releases)
 [![Last Release](https://img.shields.io/badge/Release-July%202026-brightgreen.svg)](https://github.com/cynicznykot/PasswordGenerator/releases)
 
 ---
@@ -95,7 +95,7 @@
 2. **Введите логин или почту** (например, `user@gmail.com`)
 3. Нажмите **"💾 Save the password to file"**
 4. **Выберите место и имя файла** (по умолчанию: `passwords.txt`)
-5. Запись сохраняется в формате: Service: Google | Login/email: user@gmail.com | Password: P@ssw0rd!
+5. Запись сохраняется в формате: 
 
 Service: Google | Login/email: user@gmail.com | Password: P@ssw0rd!
 
@@ -278,22 +278,30 @@ Skipped: GUI tests are slow, skipping for now
 - **Python 3.8+** — язык программирования
 - **Tkinter** — графический интерфейс
 - **Secrets** — криптографическая безопасность
-- **Unittest / Pytest** — тестирование
+- **python-docx** — экспорт в Word
+- **reportlab** — экспорт в PDF
+- **Pytest** — тестирование
 - **Git** — контроль версий
 
 ## 🗺️ Планы по развитию
 
-- [x] ✅ **Автоматическая проверка обновлений** — программа проверяет новую версию при запуске.
-- [x] ✅ **Улучшенный интерфейс** — обновлённый дизайн на `ttk` и чистый layout.
-- [x] ✅ **Сборка для Windows и Linux** — готовые исполняемые файлы для скачивания.
-- [x] ✅ **Возможность переключения между светлой и тёмной темой интерфейса**.
-- [x] ✅ **Кнопка «Не напоминать об обновлении»** - возможность отключить уведомления на 24 часа.
-- [x] ✅ **Просмотр сохранённых паролей** — список всех записей с поиском, сортировкой и фильтрацией.
-- [x] ✅ **Реализовать поиск по сервисам** — быстрый поиск пароля по названию.
-- [x] ✅ **Импорт и экспорт паролей** — поддержка форматов `.docx` (Word), `.csv` (Excel/Google Таблицы), `.json` (для переноса данных).
-- [ ] ⏳ **Шифрование файла с паролями** — защита данных пользователя.
-- [ ] ⏳ **Функция Мастер-пароль** - вход в программу по одному главному паролю - дополнительный уровень безопасности.
-- [ ] ⏳ **Собрать `.exe` для macOS** — поддержка всех основных платформ.
+### ✅ Уже реализовано
+
+- [x] ✅ **Автоматическая проверка обновлений**
+- [x] ✅ **Улучшенный интерфейс**
+- [x] ✅ **Сборка для Windows и Linux**
+- [x] ✅ **Светлая / тёмная тема**
+- [x] ✅ **Кнопка «Не напоминать об обновлении» (24 часа)**
+- [x] ✅ **Просмотр сохранённых паролей**
+- [x] ✅ **Поиск, сортировка и фильтрация**
+- [x] ✅ **Импорт и экспорт** — `.txt`, `.csv`, `.json`, `.docx`, `.pdf`
+- [x] ✅ **Редактирование и удаление записей**
+
+### 🚀 Ближайшие планы
+
+- [ ] ⏳ **Шифрование файла с паролями**
+- [ ] ⏳ **Функция Мастер-пароль**
+- [ ] ⏳ **Сборка для macOS**
 
 ## 🤝 Как помочь проекту
 
