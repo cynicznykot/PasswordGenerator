@@ -245,11 +245,11 @@ def show_passwords(root, theme):
     def on_scroll_x_mousewheel(event):
         """Scroll horizontally when mouse is over the horizontal scrollbar."""
         if hasattr(event, 'delta') and event.delta != 0:
-            tree.xview_scroll(-1 if event.delta > 0 else 1, "units")
+            tree.xview_scroll(-5 if event.delta > 0 else 5, "units")
         elif event.num == 4:
-            tree.xview_scroll(-1, "units")
+            tree.xview_scroll(-5, "units")
         elif event.num == 5:
-            tree.xview_scroll(1, "units")
+            tree.xview_scroll(5, "units")
 
     # --- Password table ---
     tree = ttk.Treeview(win, columns=("Service", "Login", "Password"), show="headings")
