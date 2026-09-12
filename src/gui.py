@@ -245,7 +245,18 @@ def show_passwords(root, theme):
     for p in all_passwords:
         tree.insert("", "end", values=(p["service"], p["login"], p["password"]))
 
+    # --- Horizontal scrollbar ---
+    scroll_x = ttk.Scrollbar(win, orient="horizontal", command=tree.xview)
+    tree.configure(xscrollcommand=scroll_x.set)
+
+    # --- Vertical scrollbar (optional) ---
+    scroll_y = ttk.Scrollbar(win, orient="vertical", command=tree.yview)
+    tree.configure(yscrollcommand=scroll_y.set)
+
+    # Placement
     tree.pack(fill="both", expand=True, padx=10, pady=10)
+    scroll_x.pack(fill='x', padx=10)
+    scroll_y.pack(side='right', fill='y')
 
     tree.bind("<Double-1>", lambda event: edit_password(tree, file_path, win))
 
