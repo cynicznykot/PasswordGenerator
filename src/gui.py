@@ -470,7 +470,7 @@ def main():
     """Initialize the main application window and run the Tkinter event loop."""
     root = tk.Tk()
     root.title("🔐 Personal Password Generator")
-    root.geometry("700x700")
+    root.geometry("700x710")
     root.after(1000, check_for_updates)
     root.focus_set()
 
