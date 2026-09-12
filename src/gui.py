@@ -239,6 +239,11 @@ def show_passwords(root, theme):
     tree.heading("Login", text="Login / Email")
     tree.heading("Password", text="Password")
 
+    # Fixed column width
+    tree.column("Service", width=200, anchor='w')
+    tree.column("Login", width=250, anchor='w')
+    tree.column("Password", width=400, anchor='w')
+
     for col in ("Service", "Login", "Password"):
         tree.heading(col, text=col, command=lambda c=col: sort_treeview(tree, c, False))
 
@@ -254,8 +259,8 @@ def show_passwords(root, theme):
     tree.configure(yscrollcommand=scroll_y.set)
 
     # Placement
-    tree.pack(fill="both", expand=True, padx=10, pady=10)
-    scroll_x.pack(fill='x', padx=10)
+    tree.pack(fill="both", expand=True, padx=10, pady=(10, 0))
+    scroll_x.pack(fill='x', padx=(0, 10))
     scroll_y.pack(side='right', fill='y')
 
     tree.bind("<Double-1>", lambda event: edit_password(tree, file_path, win))
