@@ -233,6 +233,24 @@ def show_passwords(root, theme):
     search_entry.bind("<KeyRelease>", lambda event: filter_passwords())
     strength_combo.bind("<<ComboboxSelected>>", lambda event: filter_passwords())
 
+    def on_tree_mousewheel(event):
+        """Scroll treeview with mouse wheel (cross-platform)."""
+        if hasattr(event, 'delta') and event.delta != 0:
+            tree.yview_scroll(-1 if event.delta > 0 else 1, "units")
+        elif event.num == 4:
+            tree.yview_scroll(-1, "units")
+        elif event.num == 5:
+            tree.yview_scroll(1, "units")
+
+    def on_scroll_x_mousewheel(event):
+        """Scroll horizontally when mouse is over the horizontal scrollbar."""
+        if hasattr(event, 'delta') and event.delta != 0:
+            tree.xview_scroll(-1 if event.delta > 0 else 1, "units")
+        elif event.num == 4:
+            tree.xview_scroll(-1, "units")
+        elif event.num == 5:
+            tree.xview_scroll(1, "units")
+
     # --- Password table ---
     tree = ttk.Treeview(win, columns=("Service", "Login", "Password"), show="headings")
     tree.heading("Service", text="Service")
@@ -244,19 +262,28 @@ def show_passwords(root, theme):
     tree.column("Login", width=250, anchor='w')
     tree.column("Password", width=400, anchor='w')
 
+    # Mouse wheel scroll (cross-platform)
+    tree.bind("<MouseWheel>", on_tree_mousewheel)  # Windows / macOS
+    tree.bind("<Button-4>", on_tree_mousewheel)    # Linux (up)
+    tree.bind("<Button-5>", on_tree_mousewheel)    # Linux (down)
+
+    # --- Scrollbars ---
+    scroll_x = ttk.Scrollbar(win, orient="horizontal", command=tree.xview)
+    tree.configure(xscrollcommand=scroll_x.set)
+
+    scroll_y = ttk.Scrollbar(win, orient="vertical", command=tree.yview)
+    tree.configure(yscrollcommand=scroll_y.set)
+
     for col in ("Service", "Login", "Password"):
         tree.heading(col, text=col, command=lambda c=col: sort_treeview(tree, c, False))
 
     for p in all_passwords:
         tree.insert("", "end", values=(p["service"], p["login"], p["password"]))
 
-    # --- Horizontal scrollbar ---
-    scroll_x = ttk.Scrollbar(win, orient="horizontal", command=tree.xview)
-    tree.configure(xscrollcommand=scroll_x.set)
-
-    # --- Vertical scrollbar (optional) ---
-    scroll_y = ttk.Scrollbar(win, orient="vertical", command=tree.yview)
-    tree.configure(yscrollcommand=scroll_y.set)
+    # Mouse wheel for horizontal scrollbar
+    scroll_x.bind("<MouseWheel>", on_scroll_x_mousewheel)
+    scroll_x.bind("<Button-4>", on_scroll_x_mousewheel)
+    scroll_x.bind("<Button-5>", on_scroll_x_mousewheel)
 
     # Placement
     tree.pack(fill="both", expand=True, padx=10, pady=(10, 0))
@@ -602,6 +629,7 @@ def main():
 
         if 16 <= new_value <= 64:
             length_var.set(new_value)
+
 
     # --- Password generation ---
     def on_generate():
