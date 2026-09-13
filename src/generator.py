@@ -349,8 +349,6 @@ def save_passwords(file_path, passwords):
 
     Supported formats: .txt, .csv, .json, .docx, .pdf.
     """
-    if not passwords:
-        return
 
     ext = os.path.splitext(file_path)[1].lower()
 
