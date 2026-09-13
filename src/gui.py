@@ -177,7 +177,8 @@ def show_passwords(root, theme):
         )
 
     if not file_path:
-        return  # User cancelled
+        win.destroy()
+        return  # User canceled 
 
     # Save the selected path for future use
     save_password_file_path(file_path)
