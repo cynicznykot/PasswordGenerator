@@ -178,7 +178,7 @@ def show_passwords(root, theme):
 
     if not file_path:
         win.destroy()
-        return  # User canceled 
+        return  # User canceled
 
     # Save the selected path for future use
     save_password_file_path(file_path)
@@ -492,10 +492,14 @@ def delete_selected_password(tree, file_path, parent_window):
 
     # Reload passwords, filter out the selected one and save
     all_passwords = load_passwords(file_path)
+
+    # Filter all passwords
     new_passwords = [
         p for p in all_passwords
         if not (p['service'] == service and p['login'] == login and p['password'] == password)
     ]
+
+    # Save in file
     save_passwords(file_path, new_passwords)
 
     # Remove the row from the table
@@ -613,6 +617,9 @@ def main():
     login_var = tk.StringVar(value="")
     theme_var = tk.StringVar(value='light')  # Current theme
 
+    copy_status_label = tk.Label(main_frame, text="", font=('Arial', 10))
+    copy_status_label.pack()
+
     # --- Mouse wheel handler ---
     def on_mouse_wheel(event):
         """Adjust password length using the mouse wheel."""
@@ -667,8 +674,8 @@ def main():
         if password:
             root.clipboard_clear()
             root.clipboard_append(password)
-            password_var.set("✅ Copied!")
-            root.after(2000, lambda: password_var.set(password))
+            copy_status_label.config(text="✅ Copied!")
+            root.after(2000, lambda: copy_status_label.config(text=""))
 
     # --- Theme management ---
     def apply_theme(theme):
