@@ -435,7 +435,7 @@ def import_passwords(root):
             ("Word files", "*.docx"),
             ("PDF files", "*.pdf")
         ],
-        parent=parent_windows
+        parent=root
     )
 
     if not file_path:
@@ -444,13 +444,13 @@ def import_passwords(root):
     imported = load_passwords(file_path)
 
     if not imported:
-        messagebox.showinfo("Import", "No passwords found in file.", parent=parent_window)
+        messagebox.showinfo("Import", "No passwords found in file.", parent=root)
         return
 
     answer = messagebox.askyesno(
         "Import",
         f"Found {len(imported)} passwords. \n\nDo you want to add them to your current file?",
-        parent=parent_window
+        parent=root
     )
 
     if answer:
@@ -593,7 +593,7 @@ def main():
     import_btn = tk.Button(
         main_frame,
         text="📥 Import Passwords",
-        command=lambda: import_passwords(root, root),
+        command=lambda: import_passwords(root),
         font=('Arial', 12),
         bg='#4CAF50',
         fg='white',
