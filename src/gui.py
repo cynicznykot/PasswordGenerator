@@ -767,8 +767,14 @@ def main():
 
         save_password_file_path(file_path)
 
-        with open(file_path, 'a', encoding="utf-8") as file:
-            file.write(f"Service: {service} | Login/email: {login} | Password: {password}\n")
+        existing = load_passwords(file_path) if os.path.exists(file_path) else []
+        existing.append({
+            "service": service,
+            "login": login,
+            "password": password,
+        })
+
+        save_passwords(file_path, existing)
 
         password_var.set(f"✅ Saved to: {file_path}")
         service_var.set("")
