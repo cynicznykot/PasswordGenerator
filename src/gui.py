@@ -166,6 +166,8 @@ def show_passwords(root, theme):
     # Try to load the previously used file path
     file_path = load_password_file_path()
 
+    file_path_var = [file_path]
+
     # If the file no longer exists, ask the user to select a new one
     if file_path and not os.path.exists(file_path):
         file_path = None
@@ -210,6 +212,24 @@ def show_passwords(root, theme):
         width=12
     )
     strength_combo.pack(side='left', padx=5)
+
+    def open_new_file():
+        new_path = filedialog.askopenfilename(
+            title="Select passwords file",
+            filetypes=[
+                ("All supported", "*.txt *.csv *.json *.docx *.pdf"),
+                ("Text files", "*.txt"),
+                ("CSV files", "*.csv"),
+                ("JSON files", "*.json"),
+                ("Word files", "*.docx"),
+                ("PDF files", "*.pdf")
+            ],
+            parent=win
+        )
+
+        if not new_path:
+            return
+        file_path_var[0] = new_path
 
     def filter_passwords():
         query = search_entry.get().strip().lower()
@@ -298,7 +318,7 @@ def show_passwords(root, theme):
     btn_frame.pack(fill='x', padx=10, pady=10)
 
     delete_btn = ttk.Button(btn_frame, text="🗑️ Delete Selected",
-                            command=lambda: delete_selected_password(tree, file_path, win))
+                            command=lambda: delete_selected_password(tree, file_path_var[0], win))
     delete_btn.pack(side='left', padx=5)
 
     export_btn = ttk.Button(
@@ -317,6 +337,13 @@ def show_passwords(root, theme):
         command=lambda: copy_selected_password(tree, win, root)
     )
     copy_btn.pack(side='left', padx=5)
+
+    open_btn = ttk.Button(
+        btn_frame,
+        text="📂 Open File",
+        command=lambda: open_new_file()
+    )
+    open_btn.pack(side='left', padx=5)
 
 
 def edit_password(tree, file_path, parent_window):
@@ -556,6 +583,40 @@ def copy_selected_password(tree, parent_window, root):
         root.clipboard_clear()
         root.clipboard_append(values[2])
         messagebox.showinfo("Copied", "Password copied to clipboard!", parent=parent_window)
+
+    def open_new_file(tree, parent_window):
+        """Open a new passwords file refresh the table."""
+        file_path = filedialog.askopenfilename(
+            title="Select passwords file",
+            filetypes=[
+                ("All supported", "*.txt *.csv *.json *.docx *.pdf"),
+                ("Text files", "*.txt"),
+                ("CSV files", "*.csv"),
+                ("JSON files", "*.json"),
+                ("Word file", "*.docx"),
+                ("PDF files", "*.pdf")
+            ],
+            parent=parent_window
+        )
+
+        if not file_path:
+            return
+
+        all_passwords = load_passwords(file_path)
+
+        if not all_passwords:
+            messagebox.showinfo("Open file", "No passwords found in file.", parent=parent_window)
+            return
+
+        for row in tree.get_children():
+            tree.delete(row)
+
+        for p in all_passwords:
+            tree.insert("", "end", values=(p["service"], p["login"], p["password"]))
+
+        save_password_file_path(file_path)
+
+        messagebox.showinfo("Open file", f"✅ Loade {len(all_passwords)} passwords.", parent=parent_window)
 
 
 def main():
