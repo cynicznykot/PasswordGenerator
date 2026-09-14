@@ -214,6 +214,9 @@ def show_passwords(root, theme):
     strength_combo.pack(side='left', padx=5)
 
     def open_new_file():
+        """Open a new passwords file and refresh the table."""
+        nonlocal all_passwords
+
         new_path = filedialog.askopenfilename(
             title="Select passwords file",
             filetypes=[
@@ -229,7 +232,27 @@ def show_passwords(root, theme):
 
         if not new_path:
             return
+
         file_path_var[0] = new_path
+
+        new_passwords = load_passwords(new_path)
+
+        if not new_passwords:
+            messagebox.showinfo("Open File", "No passwords found in file", parent=win)
+            return
+
+        all_passwords.clear()
+        all_passwords.extend(new_passwords)
+        
+        for row in tree.get_children():
+            tree.delete(row)
+
+        for p in all_passwords:
+            tree.insert("", "end", values=(p["service"], p["login"], p["password"]))
+
+        save_password_file_path(file_path)
+
+        messagebox.showinfo("Open File", f"✅ Loaded {len(all_passwords)} passwords", parent=win)
 
     def filter_passwords():
         query = search_entry.get().strip().lower()
